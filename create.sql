@@ -3,9 +3,9 @@ DROP TABLE IF EXISTS Program;
 DROP TABLE IF EXISTS Phone;
 DROP TABLE IF EXISTS University;
 DROP TABLE IF EXISTS Company;
-DROP TABLE IF EXISTS Reesearch_center;
+DROP TABLE IF EXISTS Research_center;
 DROP TABLE IF EXISTS Researcher;
-DROP TABLE IF EXISTS Exevutive;
+DROP TABLE IF EXISTS Executive;
 DROP TABLE IF EXISTS Project;
 DROP TABLE IF EXISTS Deliverable;
 DROP TABLE IF EXISTS Scientific_field;
@@ -14,7 +14,7 @@ DROP TABLE IF EXISTS Works_on;
 
 CREATE TABLE Organization (
   organization_id SERIAL PRIMARY KEY,
-  name TEXT,
+  name TEXT NOT NULL,
   abbreviation VARCHAR(8),
   postal_code NUMERIC(5,0) CHECK (postal_code>0),
   city TEXT,
@@ -64,7 +64,7 @@ CREATE TABLE Researcher(
   last_name TEXT NOT NULL,
   date_of_birth DATE,
   organization_id INT,
-  FOREIGN KEY (organization_id) REFERENCES Organization(organization_id), 
+  FOREIGN KEY (organization_id) REFERENCES Organization(organization_id) ON DELETE RESTRICT ON UPDATE CASCADE, 
   work_starting_day DATE
 );
 
@@ -76,29 +76,29 @@ CREATE TABLE Executive(
 
 CREATE TABLE Project(
   project_id SERIAL PRIMARY KEY,
-  project_title TEXT,
+  project_title TEXT NOT NULL,
   description TEXT,
   funding_amount NUMERIC,
-  starting_date DATE,
-  ending_date DATE,
+  starting_date DATE NOT NULL,
+  ending_date DATE NOT NULL,
   program_id INT,
-  FOREIGN KEY (program_id) REFERENCES Program(program_id),
+  FOREIGN KEY (program_id) REFERENCES Program(program_id) ON DELETE SET NULL ON UPDATE CASCADE,
   evaluator_id INT,
-  FOREIGN KEY (evaluator_id) REFERENCES Researcher(researcher_id),
+  FOREIGN KEY (evaluator_id) REFERENCES Researcher(researcher_id) ON DELETE RESTRICT ON UPDATE CASCADE,
   supervisor_id INT,
-  FOREIGN KEY (supervisor_id) REFERENCES Researcher(researcher_id),
+  FOREIGN KEY (supervisor_id) REFERENCES Researcher(researcher_id) ON DELETE RESTRICT ON UPDATE CASCADE,
   executive_id INT,
-  FOREIGN KEY (executive_id) REFERENCES Executive(executive_id),
+  FOREIGN KEY (executive_id) REFERENCES Executive(executive_id) ON DELETE SET NULL ON UPDATE CASCADE,
   organization_id INT,
-  FOREIGN KEY (organization_id) REFERENCES Organization(organization_id),
+  FOREIGN KEY (organization_id) REFERENCES Organization(organization_id) ON DELETE RESTRICT ON UPDATE CASCADE,
   evaluation_grade NUMERIC(4,2) CHECK (evaluation_grade BETWEEN 0 AND 10),
-  evaluation_date DATE
+  evaluation_date DATE,
   CHECK (ending_date-starting_date BETWEEN 365 AND 1461)
 );
 
 CREATE TABLE Deliverable(
   project_id INT,
-  FOREIGN KEY (project_id) REFERENCES Project(project_id),
+  FOREIGN KEY (project_id) REFERENCES Project(project_id) ON DELETE CASCADE ON UPDATE CASCADE,
   deliverable_title TEXT,
   description TEXT,
   delivery_date DATE,
@@ -107,13 +107,13 @@ CREATE TABLE Deliverable(
 
 CREATE TABLE Scientific_field(
   scientific_id SERIAL PRIMARY KEY,
-  field_name TEXT
+  field_name TEXT NOT NULL
 );
 
 CREATE TABLE Concerns(
   scientific_id INT,
   project_id INT,
-  FOREIGN KEY (scientific_id) REFERENCES Scientific_field(scientific_id) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (scientific_id) REFERENCES Scientific_field(scientific_id) ON DELETE RESTRICT ON UPDATE CASCADE,
   FOREIGN KEY (project_id) REFERENCES Project(project_id) ON DELETE CASCADE ON UPDATE CASCADE,
   PRIMARY KEY (scientific_id, project_id)
 );
