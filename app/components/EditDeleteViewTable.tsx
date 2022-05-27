@@ -11,33 +11,110 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel'
 import Spinner from 'react-bootstrap/Spinner'
 import _ from 'lodash'
 
-const UpdateField = ({ value }) => {
-  const [changingValue, setChangingValue] = useState(value ? value:'')
-
-  const handleChange = (input) => {
-    setChangingValue(input.target.value)
+const UpdateField = ({ value, setValue }) => {
+  const handleChange = (event) => {
+    setValue(event.target.value)
   }
 
-  return <input onChange={handleChange} type="text" value={changingValue} />
+  return <input onChange={handleChange} type="text" value={value ? value:''} />
 }
 
-const DataRow = ({ row }) => {
+const DataRow = ({ row, entity, mutate }) => {
+  const [isUpdating, setIsUpdating] = useState(false)
+  const [updateError, setUpdateError] = useState<string>()
+  const [isDeleting, setIsDeleting] = useState(false)
+  const [deleteError, setDeleteError] = useState<string>()
+
+  const inputRow = _.clone(row)
+  Object.keys(inputRow).forEach(key => {
+    if (inputRow[key] === null) inputRow[key] = ''
+    inputRow[key] = inputRow[key].toString()
+  })
+  const [updatedRow, setUpdatedRow] = useState(inputRow)
+
+  const handleUpdate = async () => {
+    setIsUpdating(true)
+    setUpdateError(null)
+    const formattedRow = _.clone(updatedRow)
+    Object.keys(formattedRow).forEach(key => {
+      if (formattedRow[key] === '') formattedRow[key] = null
+    })
+    const response = await fetch(`/api/entities/${entity}/${row.id}`, {
+      method: 'PUT',
+      body: JSON.stringify(formattedRow)
+    })
+
+    if (!response.ok) {
+      setUpdateError('error')
+    } else {
+      mutate(`/api/entities/${entity}`)
+    }
+
+    setIsUpdating(false)
+  }
+
+  const handleDelete = async () => {
+    setIsDeleting(true)
+    setDeleteError(null)
+    const response = await fetch(`/api/entities/${entity}/${row.id}`, {
+      method: 'DELETE'
+    })
+
+    if (!response.ok) {
+      setDeleteError('error')
+    } else {
+      mutate(`/api/entities/${entity}`)
+    }
+
+    setIsDeleting(false)
+  }
+
+  const setValue = (key, value) => {
+    const tempRow = _.clone(updatedRow)
+    tempRow[key] = value
+    setUpdatedRow(tempRow)
+  }
+
   return (
     <TableRow>
-      {Object.values(row).map((cell, index) =>
-        <TableCell key={index}>
-          <UpdateField value={cell} />
+      {Object.entries(updatedRow).map(([key, cell]) =>
+        <TableCell key={key}>
+          <UpdateField value={cell} setValue={value => setValue(key, value)}/>
         </TableCell>
       )}
-      <TableCell>
-        <Button variant="secondary" size="sm">
-          update
-        </Button>
+      <TableCell style={{minWidth: '95px'}}>
+        {_.isEqual(updatedRow, inputRow) ?
+          <></>
+          :
+          <>
+            {isUpdating ?
+              <Spinner size="sm" variant="secondary" style={{ margin: 'auto' }} animation="grow" />
+              :
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <Button onClick={handleUpdate} variant="secondary" size="sm">
+                  update
+                </Button>
+                {updateError &&
+                  <span style={{ color: 'red' }}>{updateError}</span>
+                }
+              </div>
+            }
+          </>
+        }
       </TableCell>
-      <TableCell>
-        <Button variant="danger" size="sm">
-          delete
-        </Button>
+      <TableCell style={{minWidth: '95px'}}>
+        {isDeleting ?
+          <Spinner size="sm" variant="danger" style={{ margin: 'auto' }} animation="grow" />
+          :
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <Button onClick={handleDelete} variant="danger" size="sm">
+              delete
+            </Button>
+            {deleteError &&
+              <span style={{ color: 'red' }}>{deleteError}</span>
+            }
+          </div>
+        }
       </TableCell>
     </TableRow>
   )
@@ -126,7 +203,7 @@ const EditDeleteViewTable = ({ rows, entity, mutate }) => {
         </TableHead>
         <TableBody>
           {rows.map((row, index) =>
-            <DataRow key={`${entity}-${index}`} row={row}/>
+            <DataRow key={`${entity}-${index}`} row={row} entity={entity} mutate={mutate}/>
           )}
         </TableBody>
       </MUITable>

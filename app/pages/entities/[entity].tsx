@@ -49,12 +49,22 @@ const EntityPage: NextPage = () => {
   const router = useRouter()
   const { entity }: { entity?: string } = router.query
 
-  const fetcher = (...args) => fetch(...args).then(res => res.json())
+  const fetcher = async url => {
+    const res = await fetch(url)
+
+    if (!res.ok) {
+      const error = new Error('An error occurred while fetching the data.')
+      error.info = await res.json()
+      error.status = res.status
+      throw error
+    }
+    return res.json()
+  }
 
   const fetchUrl = entity ? `/api/entities/${entity}`:null
   const { data, error, mutate, isValidating } = useSWR(fetchUrl, fetcher)
 
-  if (error) return <div>failed to load</div>
+  if (error) return <div>failed to load: {error?.info?.err}</div>
   if (!data) return <Spinner style={{ margin: 'auto' }} animation="grow" />
   if (isValidating) return <Spinner style={{ margin: 'auto' }} animation="grow" />
 
@@ -62,6 +72,7 @@ const EntityPage: NextPage = () => {
     return <Error statusCode={404}></Error>
   }
 
+  console.log(data, error)
   return (
     <>
       <Navigation />
