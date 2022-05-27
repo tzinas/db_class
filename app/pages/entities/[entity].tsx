@@ -51,10 +51,12 @@ const EntityPage: NextPage = () => {
 
   const fetcher = (...args) => fetch(...args).then(res => res.json())
 
-  const { data, error } = useSWR(`/api/entities/${entity}`, fetcher)
+  const fetchUrl = entity ? `/api/entities/${entity}`:null
+  const { data, error, mutate, isValidating } = useSWR(fetchUrl, fetcher)
 
   if (error) return <div>failed to load</div>
   if (!data) return <Spinner style={{ margin: 'auto' }} animation="grow" />
+  if (isValidating) return <Spinner style={{ margin: 'auto' }} animation="grow" />
 
   if (!availableEntities.includes(entity)) {
     return <Error statusCode={404}></Error>
@@ -65,7 +67,7 @@ const EntityPage: NextPage = () => {
       <Navigation />
       <EntityNavbar />
       <div style={{width: '100%', height: '100%', flexGrow: 1, minHeight: '500px', display: 'flex'}}>
-        <EditDeleteViewTable rows={data.rows} />
+        <EditDeleteViewTable entity={entity} rows={data.rows} mutate={mutate}/>
       </div>
     </>
   )

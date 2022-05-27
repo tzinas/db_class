@@ -5,7 +5,6 @@ import Navigation from 'components/Navigation'
 import { headers, projects} from 'mock/projects'
 
 const HomePage: NextPage = () => {
-
   return (
     <>
       <Navigation />
