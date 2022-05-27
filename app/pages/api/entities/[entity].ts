@@ -1,17 +1,40 @@
 import db from 'lib/db'
 import logger from 'lib/logger'
 
-type createEntityProps = {
+type entity ={ [key: string]: string | number }
+
+type CreateEntityProps = {
   entity: string
-  data: { [key: string]: string | number}
+  data: entity
   db: typeof db
 }
 
-const createEntity = async ({ entity, data, db }: createEntityProps) => {
-  await db`INSERT INTO ${db(entity)} ${db(data)}`
+type FetchAllPros = {
+  entity: string
+  db: typeof db
+}
+
+const createEntity = async ({ entity, data, db }: CreateEntityProps): Promise<void> => {
+  await db`INSERT INTO ${db(entity)} ${db(data)}` // e.g. INSERT INTO Organization(name, ...) VALUES(Org1, ...)
+}
+
+const fetchAll = ({ entity, db }: FetchAllPros): Promise<entity[]> => {
+  return db`SELECT * FROM ${db(entity)}` // e.g. SELECT * FROM Organization
 }
 
 const responses = {
+  GET: async (req, res) => {
+    const { entity } = req.query
+
+    try {
+      const rows = await fetchAll({ entity, db })
+      logger.info(`${rows.length} ${entity}s fetched syccressfully`)
+      return res.status(200).json({ message: `${rows.length} ${entity}s fetched succressfully`, rows: rows })
+    } catch (err) {
+      logger.debug(`Error fetching ${entity}s:`, err)
+      return res.status(500).json({ err: `Error fetching ${entity}s` })
+    }
+  },
   POST: async (req, res) => {
     const { entity } = req.query
 
