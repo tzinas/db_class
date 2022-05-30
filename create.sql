@@ -81,6 +81,7 @@ CREATE TABLE Project(
   funding_amount NUMERIC,
   starting_date DATE NOT NULL,
   ending_date DATE NOT NULL,
+  duration NUMERIC GENERATED ALWAYS AS (ROUND(CAST(ending_date - starting_date AS DECIMAL) / 365)) STORED,
   program_id INT,
   FOREIGN KEY (program_id) REFERENCES Program(id) ON DELETE SET NULL ON UPDATE CASCADE,
   evaluator_id INT,
