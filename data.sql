@@ -1,7 +1,7 @@
 insert into Organization (name, abbreviation, postal_code, city, street, street_number) values ('National Observatory of Athens', 'NOA', '11810', 'Athens', 'Nymphs Hill', '1');
 insert into Organization (name, abbreviation, postal_code, city, street, street_number) values ('National Network of Research and Technology', 'GRNET', '11523', 'Athens', 'Kifissias', '7');
 insert into Organization (name, abbreviation, postal_code, city, street, street_number) values ('Hellenic Centre for Marine Research', 'HCMR', '19013', 'Anavyssos', 'Athens Sounio avenue', '47');
-insert into Organization (name, abbreviation, postal_code, city, street, street_number) values ('Foundation fo research and technology', 'FORTH', '70013', 'Heraklion', 'N.Plastira', '18');
+insert into Organization (name, abbreviation, postal_code, city, street, street_number) values ('Foundation for research and technology', 'FORTH', '70013', 'Heraklion', 'N.Plastira', '18');
 insert into Organization (name, abbreviation, postal_code, city, street, street_number) values ('Academy of Athens', 'AOA', '10679', 'Athens', 'Panepistimiou', '28');
 insert into Organization (name, abbreviation, postal_code, city, street, street_number) values ('Demokritos, National Centre for Scientific Research', 'NCSR', '15341', 'Athens', 'Neapoleos and Patriarxou Grhgoriou', '27');
 insert into Organization (name, abbreviation, postal_code, city, street, street_number) values ('Centre for Research and Technology Hellas', 'CERTH', '15125', 'Athens', 'Aigialias', '52');
