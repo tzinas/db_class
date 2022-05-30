@@ -1,33 +1,33 @@
-insert into Organization (name, abbreviation, postal_code, city, street, street_number) values ('National Observatory of Athens', 'NOA', '11810', 'Athens', 'Nymphs Hill', '1');
-insert into Organization (name, abbreviation, postal_code, city, street, street_number) values ('National Network of Research and Technology', 'GRNET', '11523', 'Athens', 'Kifissias', '7');
-insert into Organization (name, abbreviation, postal_code, city, street, street_number) values ('Hellenic Centre for Marine Research', 'HCMR', '19013', 'Anavyssos', 'Athens Sounio avenue', '47');
-insert into Organization (name, abbreviation, postal_code, city, street, street_number) values ('Foundation for research and technology', 'FORTH', '70013', 'Heraklion', 'N.Plastira', '18');
-insert into Organization (name, abbreviation, postal_code, city, street, street_number) values ('Academy of Athens', 'AOA', '10679', 'Athens', 'Panepistimiou', '28');
-insert into Organization (name, abbreviation, postal_code, city, street, street_number) values ('Demokritos, National Centre for Scientific Research', 'NCSR', '15341', 'Athens', 'Neapoleos and Patriarxou Grhgoriou', '27');
-insert into Organization (name, abbreviation, postal_code, city, street, street_number) values ('Centre for Research and Technology Hellas', 'CERTH', '15125', 'Athens', 'Aigialias', '52');
-insert into Organization (name, abbreviation, postal_code, city, street, street_number) values ('Biomedical Sciences Research Center "Alexander Fleming"', 'BSRC', '16672', 'Vari', 'Fleming', '34');
-insert into Organization (name, abbreviation, postal_code, city, street, street_number) values ('Centre of Planning and Economic Research', 'KEPE', '10672', 'Athens', 'Amerikis', '11');
-insert into Organization (name, abbreviation, postal_code, city, street, street_number) values ('National Hellenic Research Foundation', 'EIE', '11635', 'Athens', 'Vassileos Konstantinou ave.', '48');
-insert into Organization (name, abbreviation, postal_code, city, street, street_number) values ('National Technical University of Athens', 'NTUA', '15780', 'Athens', 'Iroon Polytechniou', '9');
-insert into Organization (name, abbreviation, postal_code, city, street, street_number) values ('National and Kapodistrian University of Athens', 'NKUA', '15784', 'Athens', 'Panepistimiopolis', null);
-insert into Organization (name, abbreviation, postal_code, city, street, street_number) values ('Aristotle University of Thessaloniki', 'AUTH', '54124', 'Thessaloniki', 'University Campus', null);
-insert into Organization (name, abbreviation, postal_code, city, street, street_number) values ('University of Patras', 'Upatras', '26504', 'Patra', 'Panepistimioupolis', null);
-insert into Organization (name, abbreviation, postal_code, city, street, street_number) values ('University of Crete', 'UOC', '74100', 'Rethymno', 'Panepistimioupolis of Rethymno', null);
-insert into Organization (name, abbreviation, postal_code, city, street, street_number) values ('University of Ioannina', 'UOI', '45110', 'Ioannina', 'University Campus', null);
-insert into Organization (name, abbreviation, postal_code, city, street, street_number) values ('Aegean University', 'AEGEAN', '81100', 'Mitilini', 'Lofos Panepistimiou', null);
-insert into Organization (name, abbreviation, postal_code, city, street, street_number) values ('Democritus University Of Thrace', 'DUTH', '69100', 'Komotini', 'Panepistimioupolis', null);
-insert into Organization (name, abbreviation, postal_code, city, street, street_number) values ('University of Peloponnese', 'UOP', '22100', 'Tripoli', 'Karaiskaki', '70');
-insert into Organization (name, abbreviation, postal_code, city, street, street_number) values ('Ionian University', 'IONU', '49100', 'Kerkira', 'Ioannou Theotoki', '72');
-insert into Organization (name, abbreviation, postal_code, city, street, street_number) values ('Motor oil', 'MO', '15124', 'Athens', 'Irodou Attikou', '12');
-insert into Organization (name, abbreviation, postal_code, city, street, street_number) values ('Apivita', 'APVT', '19003', 'Markopoulo', 'Undustrial park', null);
-insert into Organization (name, abbreviation, postal_code, city, street, street_number) values ('Elpedison', 'ELP', '14562', 'Athens', 'Kifissias ave', '282');
-insert into Organization (name, abbreviation, postal_code, city, street, street_number) values ('Shell', 'SHELL', '16561', 'Athens', 'Andrea Papandreou', '141');
-insert into Organization (name, abbreviation, postal_code, city, street, street_number) values ('Samsung', 'Samsung', '15125', 'Athens', 'Kifissias ave.', '84');
-insert into Organization (name, abbreviation, postal_code, city, street, street_number) values ('Titan', 'TitSA', '11143', 'Athens', 'Chalkidos', '22');
-insert into Organization (name, abbreviation, postal_code, city, street, street_number) values ('Vianex', 'VNX', '14671', 'Athens', 'Athinon-Lamias', '18');
-insert into Organization (name, abbreviation, postal_code, city, street, street_number) values ('Cosmote', 'OTE', '16777', 'Athens', 'Iasonidou', '57');
-insert into Organization (name, abbreviation, postal_code, city, street, street_number) values ('Toyota', 'TYT', '16675', 'Athens', 'Miaouli', '24');
-insert into Organization (name, abbreviation, postal_code, city, street, street_number) values ('BirdLife Greece', 'HOS', '14578', 'Athens', 'Thiseos', '95');
+insert into Organization (name, abbreviation, postal_code, city, street, street_number, organization_type) values ('National Observatory of Athens', 'NOA', '11810', 'Athens', 'Nymphs Hill', '1', 'Research center');
+insert into Organization (name, abbreviation, postal_code, city, street, street_number, organization_type) values ('National Network of Research and Technology', 'GRNET', '11523', 'Athens', 'Kifissias', '7', 'Research center');
+insert into Organization (name, abbreviation, postal_code, city, street, street_number, organization_type) values ('Hellenic Centre for Marine Research', 'HCMR', '19013', 'Anavyssos', 'Athens Sounio avenue', '47', 'Research center');
+insert into Organization (name, abbreviation, postal_code, city, street, street_number, organization_type) values ('Foundation for research and technology', 'FORTH', '70013', 'Heraklion', 'N.Plastira', '18', 'Research center');
+insert into Organization (name, abbreviation, postal_code, city, street, street_number, organization_type) values ('Academy of Athens', 'AOA', '10679', 'Athens', 'Panepistimiou', '28', 'Research center');
+insert into Organization (name, abbreviation, postal_code, city, street, street_number, organization_type) values ('Demokritos, National Centre for Scientific Research', 'NCSR', '15341', 'Athens', 'Neapoleos and Patriarxou Grhgoriou', '27', 'Research center');
+insert into Organization (name, abbreviation, postal_code, city, street, street_number, organization_type) values ('Centre for Research and Technology Hellas', 'CERTH', '15125', 'Athens', 'Aigialias', '52', 'Research center');
+insert into Organization (name, abbreviation, postal_code, city, street, street_number, organization_type) values ('Biomedical Sciences Research Center "Alexander Fleming"', 'BSRC', '16672', 'Vari', 'Fleming', '34', 'Research center');
+insert into Organization (name, abbreviation, postal_code, city, street, street_number, organization_type) values ('Centre of Planning and Economic Research', 'KEPE', '10672', 'Athens', 'Amerikis', '11', 'Research center');
+insert into Organization (name, abbreviation, postal_code, city, street, street_number, organization_type) values ('National Hellenic Research Foundation', 'EIE', '11635', 'Athens', 'Vassileos Konstantinou ave.', '48', 'Research center');
+insert into Organization (name, abbreviation, postal_code, city, street, street_number, organization_type) values ('National Technical University of Athens', 'NTUA', '15780', 'Athens', 'Iroon Polytechniou', '9', 'University');
+insert into Organization (name, abbreviation, postal_code, city, street, street_number, organization_type) values ('National and Kapodistrian University of Athens', 'NKUA', '15784', 'Athens', 'Panepistimiopolis', null, 'University');
+insert into Organization (name, abbreviation, postal_code, city, street, street_number, organization_type) values ('Aristotle University of Thessaloniki', 'AUTH', '54124', 'Thessaloniki', 'University Campus', null, 'University');
+insert into Organization (name, abbreviation, postal_code, city, street, street_number, organization_type) values ('University of Patras', 'Upatras', '26504', 'Patra', 'Panepistimioupolis', null, 'University');
+insert into Organization (name, abbreviation, postal_code, city, street, street_number, organization_type) values ('University of Crete', 'UOC', '74100', 'Rethymno', 'Panepistimioupolis of Rethymno', null, 'University');
+insert into Organization (name, abbreviation, postal_code, city, street, street_number, organization_type) values ('University of Ioannina', 'UOI', '45110', 'Ioannina', 'University Campus', null, 'University');
+insert into Organization (name, abbreviation, postal_code, city, street, street_number, organization_type) values ('Aegean University', 'AEGEAN', '81100', 'Mitilini', 'Lofos Panepistimiou', null, 'University');
+insert into Organization (name, abbreviation, postal_code, city, street, street_number, organization_type) values ('Democritus University Of Thrace', 'DUTH', '69100', 'Komotini', 'Panepistimioupolis', null, 'University');
+insert into Organization (name, abbreviation, postal_code, city, street, street_number, organization_type) values ('University of Peloponnese', 'UOP', '22100', 'Tripoli', 'Karaiskaki', '70', 'University');
+insert into Organization (name, abbreviation, postal_code, city, street, street_number, organization_type) values ('Ionian University', 'IONU', '49100', 'Kerkira', 'Ioannou Theotoki', '72', 'University');
+insert into Organization (name, abbreviation, postal_code, city, street, street_number, organization_type) values ('Motor oil', 'MO', '15124', 'Athens', 'Irodou Attikou', '12', 'Company');
+insert into Organization (name, abbreviation, postal_code, city, street, street_number, organization_type) values ('Apivita', 'APVT', '19003', 'Markopoulo', 'Undustrial park', null, 'Company');
+insert into Organization (name, abbreviation, postal_code, city, street, street_number, organization_type) values ('Elpedison', 'ELP', '14562', 'Athens', 'Kifissias ave', '282', 'Company');
+insert into Organization (name, abbreviation, postal_code, city, street, street_number, organization_type) values ('Shell', 'SHELL', '16561', 'Athens', 'Andrea Papandreou', '141', 'Company');
+insert into Organization (name, abbreviation, postal_code, city, street, street_number, organization_type) values ('Samsung', 'Samsung', '15125', 'Athens', 'Kifissias ave.', '84', 'Company');
+insert into Organization (name, abbreviation, postal_code, city, street, street_number, organization_type) values ('Titan', 'TitSA', '11143', 'Athens', 'Chalkidos', '22', 'Company');
+insert into Organization (name, abbreviation, postal_code, city, street, street_number, organization_type) values ('Vianex', 'VNX', '14671', 'Athens', 'Athinon-Lamias', '18', 'Company');
+insert into Organization (name, abbreviation, postal_code, city, street, street_number, organization_type) values ('Cosmote', 'OTE', '16777', 'Athens', 'Iasonidou', '57', 'Company');
+insert into Organization (name, abbreviation, postal_code, city, street, street_number, organization_type) values ('Toyota', 'TYT', '16675', 'Athens', 'Miaouli', '24', 'Company');
+insert into Organization (name, abbreviation, postal_code, city, street, street_number, organization_type) values ('BirdLife Greece', 'HOS', '14578', 'Athens', 'Thiseos', '95', 'Company');
 
 
 insert into Program (department, program_name) values ('Department 1', 'Connecting Greece Facility');
@@ -74,7 +74,7 @@ insert into Phone (organization_id, phone) values ('7', '2111069599');
 insert into Phone (organization_id, phone) values ('7', '2111069598');
 insert into Phone (organization_id, phone) values ('8', '2109656310');
 insert into Phone (organization_id, phone) values ('9', '2103676300');
-insert into Phone (organization_id, phone) values ('10', '2103490000');
+insert into Phone (organization_id, phone) values ('10', '2103480000');
 insert into Phone (organization_id, phone) values ('10', '2103490001');
 insert into Phone (organization_id, phone) values ('11', '2107721000');
 insert into Phone (organization_id, phone) values ('12', '2107277000');
@@ -101,7 +101,7 @@ insert into Phone (organization_id, phone) values ('28', '2109628000');
 insert into Phone (organization_id, phone) values ('29', '2103445785');
 insert into Phone (organization_id, phone) values ('30', '2109947551');
 
-
+/*
 insert into University (organization_id, government_funding) values (11, 10064068);
 insert into University (organization_id, government_funding) values (12, 13226617);
 insert into University (organization_id, government_funding) values (13, 5724875);
@@ -112,8 +112,19 @@ insert into University (organization_id, government_funding) values (17, 5440239
 insert into University (organization_id, government_funding) values (18, 6335997);
 insert into University (organization_id, government_funding) values (19, 5958414);
 insert into University (organization_id, government_funding) values (20, 9757099);
+*/
+update University set government_funding = 10064068 where organization_id = 11;
+update University set government_funding = 13226617 where organization_id = 12;
+update University set government_funding = 5724875 where organization_id = 13;
+update University set government_funding = 14005835 where organization_id = 14;
+update University set government_funding = 10866836 where organization_id = 15;
+update University set government_funding = 10693918 where organization_id = 16;
+update University set government_funding = 5440239 where organization_id = 17;
+update University set government_funding = 6335997 where organization_id = 18;
+update University set government_funding = 5958414 where organization_id = 19;
+update University set government_funding = 9757099 where organization_id = 20;
 
-
+/*
 insert into Company (organization_id, equity) values (21, 1638396772);
 insert into Company (organization_id, equity) values (22, 3422525109);
 insert into Company (organization_id, equity) values (23, 2141502289);
@@ -124,8 +135,20 @@ insert into Company (organization_id, equity) values (27, 2257110948);
 insert into Company (organization_id, equity) values (28, 1179525899);
 insert into Company (organization_id, equity) values (29, 1639188130);
 insert into Company (organization_id, equity) values (30, 476953662);
+*/
+update Company set equity = 1638396772 where organization_id = 21;
+update Company set equity = 3422525109 where organization_id = 22;
+update Company set equity = 2141502289 where organization_id = 23;
+update Company set equity = 3032068720 where organization_id = 24;
+update Company set equity = 2137281883 where organization_id = 25;
+update Company set equity = 3301297416 where organization_id = 26;
+update Company set equity = 2257110948 where organization_id = 27;
+update Company set equity = 1179525899 where organization_id = 28;
+update Company set equity = 1639188130 where organization_id = 29;
+update Company set equity = 476953662 where organization_id = 30;
 
 
+/*
 insert into Research_center (organization_id, government_funding, private_equity) values (1, 7405765, 3948310295);
 insert into Research_center (organization_id, government_funding, private_equity) values (2, 6280408, 3782354722);
 insert into Research_center (organization_id, government_funding, private_equity) values (3, 2344651, 2896419159);
@@ -136,6 +159,20 @@ insert into Research_center (organization_id, government_funding, private_equity
 insert into Research_center (organization_id, government_funding, private_equity) values (8, 6129130, 2793482648);
 insert into Research_center (organization_id, government_funding, private_equity) values (9, 6439897, 2702707284);
 insert into Research_center (organization_id, government_funding, private_equity) values (10, 2171541, 633656085);
+*/
+update Research_center set government_funding = 7405765, private_equity = 3948310295 where organization_id = 1;
+update Research_center set government_funding = 6280408, private_equity = 3782354722 where organization_id = 2;
+update Research_center set government_funding = 2344651, private_equity = 2896419159 where organization_id = 3;
+update Research_center set government_funding = 3826690, private_equity = 2145095862 where organization_id = 4;
+update Research_center set government_funding = 4388808, private_equity = 868923357 where organization_id = 5;
+update Research_center set government_funding = 7661665, private_equity = 2277927799 where organization_id = 6;
+update Research_center set government_funding = 5397506, private_equity = 3407193649 where organization_id = 7;
+update Research_center set government_funding = 6129130, private_equity = 2793482648 where organization_id = 8;
+update Research_center set government_funding = 6439897, private_equity = 2702707284 where organization_id = 9;
+update Research_center set government_funding = 2171541, private_equity = 633656085 where organization_id = 10;
+
+
+
 
 
 insert into Researcher (sex, first_name, last_name, date_of_birth, organization_id, work_starting_day) values ('female', 'Sydelle', 'Kirk', '1978-02-12', 1, '2021-07-10');

@@ -12,6 +12,8 @@ DROP TABLE IF EXISTS Scientific_field;
 DROP TABLE IF EXISTS Concerns;
 DROP TABLE IF EXISTS Works_on;
 
+CREATE TYPE ORG AS ENUM ('University', 'Company', 'Research center');
+
 CREATE TABLE Organization (
   id SERIAL PRIMARY KEY,
   name TEXT NOT NULL,
@@ -19,7 +21,8 @@ CREATE TABLE Organization (
   postal_code NUMERIC(5,0) CHECK (postal_code>0),
   city TEXT,
   street TEXT,
-  street_number INT, CHECK (street_number>0)
+  street_number INT, CHECK (street_number>0),
+  organization_type ORG NOT NULL
 );
 
 CREATE TABLE Program (
@@ -32,7 +35,7 @@ CREATE TABLE Phone(
   id SERIAL PRIMARY KEY, 
   organization_id INT,
   FOREIGN KEY (organization_id) REFERENCES Organization(id) ON DELETE CASCADE ON UPDATE CASCADE,
-  phone NUMERIC(10,0)
+  phone NUMERIC(10,0) UNIQUE
 );
 
 CREATE TABLE University(
@@ -57,6 +60,8 @@ CREATE TABLE Research_center(
   private_equity NUMERIC
 );
 
+/*trigger update org_id, delete*/
+
 CREATE TABLE Researcher(
   id SERIAL PRIMARY KEY,
   sex TEXT CHECK(sex IN ('male', 'female')),
@@ -67,6 +72,8 @@ CREATE TABLE Researcher(
   FOREIGN KEY (organization_id) REFERENCES Organization(id) ON DELETE RESTRICT ON UPDATE CASCADE, 
   work_starting_day DATE
 );
+/*update organ_id ? */ 
+/*work_day<ending_date*/
 
 CREATE TABLE Executive(
   id SERIAL PRIMARY KEY, 
@@ -93,9 +100,12 @@ CREATE TABLE Project(
   organization_id INT,
   FOREIGN KEY (organization_id) REFERENCES Organization(id) ON DELETE RESTRICT ON UPDATE CASCADE,
   evaluation_grade NUMERIC(4,2) CHECK (evaluation_grade BETWEEN 0 AND 10),
-  evaluation_date DATE,
-  CHECK (ending_date-starting_date BETWEEN 365 AND 1461)
+  evaluation_date DATE, 
+  CHECK (duration BETWEEN 1 AND 4),
+  CHECK (evaluation_date < starting_date)
 );
+/*evaluator (create and update) not in org
+supervisor in org*/
 
 CREATE TABLE Deliverable(
   id SERIAL PRIMARY KEY, 
@@ -105,6 +115,7 @@ CREATE TABLE Deliverable(
   description TEXT,
   delivery_date DATE
 );
+/*date between starting and ending*/
 
 CREATE TABLE Scientific_field(
   id SERIAL PRIMARY KEY,
@@ -118,6 +129,7 @@ CREATE TABLE Concerns(
   FOREIGN KEY (scientific_id) REFERENCES Scientific_field(id) ON DELETE RESTRICT ON UPDATE CASCADE,
   FOREIGN KEY (project_id) REFERENCES Project(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
+/*???*/
 
 CREATE TABLE Works_on(
   id SERIAL PRIMARY KEY, 
@@ -126,5 +138,22 @@ CREATE TABLE Works_on(
   FOREIGN KEY (researcher_id) REFERENCES Researcher(id) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (project_id) REFERENCES Project(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
+/*org id */
 
 
+CREATE OR REPLACE FUNCTION create_org_type() RETURNS TRIGGER AS $Org_type$
+BEGIN
+  IF (NEW.organization_type = 'University') THEN
+    INSERT INTO University(organization_id) values (NEW.id);
+  ELSIF (NEW.organization_type = 'Company') THEN
+    INSERT INTO Company(organization_id) values (NEW.id);
+  ELSIF (NEW.organization_type = 'Research center') THEN
+    INSERT INTO Research_center(organization_id) values (NEW.id);
+  END IF;
+  RETURN NEW;
+END;
+$Org_type$ LANGUAGE plpgsql;
+
+CREATE TRIGGER Org_type AFTER INSERT ON Organization 
+FOR EACH ROW 
+EXECUTE FUNCTION create_org_type()
