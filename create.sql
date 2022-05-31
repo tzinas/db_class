@@ -60,8 +60,6 @@ CREATE TABLE Research_center(
   private_equity NUMERIC
 );
 
-/*trigger update org_id, delete*/
-
 CREATE TABLE Researcher(
   id SERIAL PRIMARY KEY,
   sex TEXT CHECK(sex IN ('male', 'female')),
@@ -72,8 +70,6 @@ CREATE TABLE Researcher(
   FOREIGN KEY (organization_id) REFERENCES Organization(id) ON DELETE RESTRICT ON UPDATE CASCADE, 
   work_starting_day DATE
 );
-/*update organ_id ? */ 
-/*work_day<ending_date*/
 
 CREATE TABLE Executive(
   id SERIAL PRIMARY KEY, 
@@ -101,11 +97,10 @@ CREATE TABLE Project(
   FOREIGN KEY (organization_id) REFERENCES Organization(id) ON DELETE RESTRICT ON UPDATE CASCADE,
   evaluation_grade NUMERIC(4,2) CHECK (evaluation_grade BETWEEN 0 AND 10),
   evaluation_date DATE, 
+  CHECK (ending_date > starting_date),
   CHECK (duration BETWEEN 1 AND 4),
   CHECK (evaluation_date < starting_date)
 );
-/*evaluator (create and update) not in org
-supervisor in org*/
 
 CREATE TABLE Deliverable(
   id SERIAL PRIMARY KEY, 
@@ -115,7 +110,6 @@ CREATE TABLE Deliverable(
   description TEXT,
   delivery_date DATE
 );
-/*date between starting and ending*/
 
 CREATE TABLE Scientific_field(
   id SERIAL PRIMARY KEY,
@@ -129,7 +123,6 @@ CREATE TABLE Concerns(
   FOREIGN KEY (scientific_id) REFERENCES Scientific_field(id) ON DELETE RESTRICT ON UPDATE CASCADE,
   FOREIGN KEY (project_id) REFERENCES Project(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
-/*???*/
 
 CREATE TABLE Works_on(
   id SERIAL PRIMARY KEY, 
@@ -138,10 +131,9 @@ CREATE TABLE Works_on(
   FOREIGN KEY (researcher_id) REFERENCES Researcher(id) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (project_id) REFERENCES Project(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
-/*org id */
 
 
-CREATE OR REPLACE FUNCTION create_org_type() RETURNS TRIGGER AS $Org_type$
+CREATE OR REPLACE FUNCTION create_org_type() RETURNS TRIGGER AS $Org_type_insert$
 BEGIN
   IF (NEW.organization_type = 'University') THEN
     INSERT INTO University(organization_id) values (NEW.id);
@@ -152,8 +144,94 @@ BEGIN
   END IF;
   RETURN NEW;
 END;
-$Org_type$ LANGUAGE plpgsql;
+$Org_type_insert$ LANGUAGE plpgsql;
 
-CREATE TRIGGER Org_type AFTER INSERT ON Organization 
+CREATE TRIGGER Org_type_insert AFTER INSERT ON Organization 
 FOR EACH ROW 
-EXECUTE FUNCTION create_org_type()
+EXECUTE FUNCTION create_org_type();
+
+
+CREATE RULE delete_protect1 AS ON DELETE TO University DO INSTEAD NOTHING;
+CREATE RULE delete_protect2 AS ON DELETE TO Company DO INSTEAD NOTHING;
+CREATE RULE delete_protect3 AS ON DELETE TO Research_center DO INSTEAD NOTHING;
+
+
+CREATE FUNCTION update_org_type() RETURNS TRIGGER AS $Org_type_update$
+BEGIN
+  IF (NEW.organization_id <> OLD.organization_id) THEN 
+    RAISE EXCEPTION 'Cannot delete';
+  END IF;
+  RETURN NEW;
+END;
+$Org_type_update$ LANGUAGE plpgsql;
+
+CREATE TRIGGER Org_type_update BEFORE UPDATE ON University
+FOR EACH ROW 
+EXECUTE FUNCTION update_org_type();
+
+CREATE TRIGGER Org_type_update BEFORE UPDATE ON Company
+FOR EACH ROW 
+EXECUTE FUNCTION update_org_type();
+
+CREATE TRIGGER Org_type_update BEFORE UPDATE ON Research_center
+FOR EACH ROW 
+EXECUTE FUNCTION update_org_type();
+
+
+CREATE FUNCTION Check_works_on() RETURNS TRIGGER AS $Check_works_on$
+BEGIN
+  IF ((SELECT work_starting_day FROM Researcher WHERE id=NEW.researcher_id)>=(SELECT ending_date FROM Project WHERE id=NEW.project_id)) OR
+  ((SELECT organization_id FROM Researcher WHERE id=NEW.researcher_id)<>(SELECT organization_id FROM Project WHERE id=NEW.project_id))  THEN
+    RAISE EXCEPTION 'Invalid relation';
+  END IF;
+  RETURN NEW;
+END;
+$Check_works_on$ LANGUAGE plpgsql;
+
+CREATE TRIGGER Check_works_on BEFORE INSERT OR UPDATE ON Works_on
+FOR EACH ROW 
+EXECUTE FUNCTION check_works_on();
+
+
+CREATE FUNCTION check_dates() RETURNS TRIGGER AS $Del_date$ 
+BEGIN
+  IF ((NEW.delivery_date<(SELECT starting_date FROM Project WHERE id=NEW.project_id)) OR 
+  (NEW.delivery_date>(SELECT ending_date FROM Project WHERE id=NEW.project_id))) THEN 
+    RAISE EXCEPTION 'Invalid date';
+  END IF;
+  RETURN NEW;
+END;
+$Del_date$ LANGUAGE plpgsql;
+
+CREATE TRIGGER Del_date BEFORE INSERT OR UPDATE ON Deliverable
+FOR EACH ROW
+EXECUTE FUNCTION check_dates();
+
+
+CREATE FUNCTION check_supervisor() RETURNS TRIGGER AS $Supervisor_in_org$
+BEGIN
+  IF (NEW.organization_id<>(SELECT organization_id FROM Researcher WHERE id=NEW.supervisor_id)) THEN
+    RAISE EXCEPTION 'Invalid relation';
+  END IF;
+  RETURN NEW;
+END;
+$Supervisor_in_org$ LANGUAGE plpgsql;
+
+CREATE TRIGGER Supervisor_in_org BEFORE INSERT OR UPDATE ON Project
+FOR EACH ROW
+EXECUTE FUNCTION check_supervisor();
+
+
+CREATE FUNCTION check_evaluator() RETURNS TRIGGER AS $Evaluator_in_org$
+BEGIN
+  IF (NEW.organization_id=(SELECT organization_id FROM Researcher WHERE id=NEW.evaluator_id)) THEN
+    RAISE EXCEPTION 'Invalid relation';
+  END IF;
+  RETURN NEW;
+END;
+$Evaluator_in_org$ LANGUAGE plpgsql;
+
+CREATE TRIGGER Evaluator_in_org BEFORE INSERT OR UPDATE ON Project
+FOR EACH ROW
+EXECUTE FUNCTION check_evaluator();
+

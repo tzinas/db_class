@@ -155,7 +155,8 @@ insert into Research_center (organization_id, government_funding, private_equity
 insert into Research_center (organization_id, government_funding, private_equity) values (4, 3826690, 2145095862);
 insert into Research_center (organization_id, government_funding, private_equity) values (5, 4388808, 868923357);
 insert into Research_center (organization_id, government_funding, private_equity) values (6, 7661665, 2277927799);
-insert into Research_center (organization_id, government_funding, private_equity) values (7, 5397506, 3407193649);
+insert into Research_center (organization_id, government_funding, private_equity) values (7, 5397506, 340719364insert into Researcher (sex, first_name, last_name, date_of_birth, organization_id, work_starting_day) values ('female', 'Annabel', 'Bushby', '1983-07-25', 12, '2021-06-03');
+9);
 insert into Research_center (organization_id, government_funding, private_equity) values (8, 6129130, 2793482648);
 insert into Research_center (organization_id, government_funding, private_equity) values (9, 6439897, 2702707284);
 insert into Research_center (organization_id, government_funding, private_equity) values (10, 2171541, 633656085);
@@ -175,7 +176,7 @@ update Research_center set government_funding = 2171541, private_equity = 633656
 
 
 
-insert into Researcher (sex, first_name, last_name, date_of_birth, organization_id, work_starting_day) values ('female', 'Sydelle', 'Kirk', '1978-02-12', 1, '2021-07-10');
+insert into Researcher (sex, first_name, last_name, date_of_birth, organization_id, work_starting_day) values ('female', 'Sydelle', 'Kirk', '1978-02-12', 1, '2013-07-10');
 insert into Researcher (sex, first_name, last_name, date_of_birth, organization_id, work_starting_day) values ('female', 'Cory', 'Maasze', '1964-06-22', 1, '2001-02-06');
 insert into Researcher (sex, first_name, last_name, date_of_birth, organization_id, work_starting_day) values ('female', 'Mikaela', 'Ackery', '1966-05-21', 1, '2002-02-10');
 insert into Researcher (sex, first_name, last_name, date_of_birth, organization_id, work_starting_day) values ('female', 'Wenda', 'Binnall', '1966-11-24', 1, '2012-01-11');
@@ -207,7 +208,7 @@ insert into Researcher (sex, first_name, last_name, date_of_birth, organization_
 insert into Researcher (sex, first_name, last_name, date_of_birth, organization_id, work_starting_day) values ('female', 'Evangeline', 'Kynastone', '1978-07-15', 11, '2006-08-20');
 insert into Researcher (sex, first_name, last_name, date_of_birth, organization_id, work_starting_day) values ('female', 'Amelie', 'Durand', '1982-08-26', 11, '2010-06-15');
 insert into Researcher (sex, first_name, last_name, date_of_birth, organization_id, work_starting_day) values ('female', 'Lexi', 'Baker', '1967-06-21', 12, '2021-11-18');
-insert into Researcher (sex, first_name, last_name, date_of_birth, organization_id, work_starting_day) values ('female', 'Annabel', 'Bushby', '1983-07-25', 12, '2021-06-03');
+insert into Researcher (sex, first_name, last_name, date_of_birth, organization_id, work_starting_day) values ('female', 'Annabel', 'Bushby', '1963-07-25', 12, '2011-06-03');
 insert into Researcher (sex, first_name, last_name, date_of_birth, organization_id, work_starting_day) values ('female', 'Eveleen', 'Attfield', '1975-01-12', 12, '2017-06-05');
 insert into Researcher (sex, first_name, last_name, date_of_birth, organization_id, work_starting_day) values ('female', 'Grethel', 'Clay', '1988-12-09', 12, '2012-10-04');
 insert into Researcher (sex, first_name, last_name, date_of_birth, organization_id, work_starting_day) values ('female', 'Bobbie', 'Vagg', '1992-08-15', 13, '2017-11-21');
@@ -250,9 +251,9 @@ insert into Researcher (sex, first_name, last_name, date_of_birth, organization_
 insert into Researcher (sex, first_name, last_name, date_of_birth, organization_id, work_starting_day) values ('male', 'Mitchel', 'McMillian', '1963-12-15', 23, '2005-11-26');
 insert into Researcher (sex, first_name, last_name, date_of_birth, organization_id, work_starting_day) values ('male', 'Broddy', 'Poure', '1988-10-19', 23, '2008-03-17');
 insert into Researcher (sex, first_name, last_name, date_of_birth, organization_id, work_starting_day) values ('male', 'Bo', 'Curry', '1966-01-03', 24, '2014-10-30');
-insert into Researcher (sex, first_name, last_name, date_of_birth, organization_id, work_starting_day) values ('male', 'Lionel', 'Keats', '1994-11-02', 24, '2020-06-19');
+insert into Researcher (sex, first_name, last_name, date_of_birth, organization_id, work_starting_day) values ('male', 'Lionel', 'Keats', '1964-11-02', 24, '2004-06-19');
 insert into Researcher (sex, first_name, last_name, date_of_birth, organization_id, work_starting_day) values ('male', 'Holden', 'Swiffin', '1971-07-01', 24, '2000-11-27');
-insert into Researcher (sex, first_name, last_name, date_of_birth, organization_id, work_starting_day) values ('male', 'Tonnie', 'Paulley', '1972-03-26', 24, '2010-12-05');
+insert into Researcher (sex, first_name, last_name, date_of_birth, organization_id, work_starting_day) values ('male', 'Tonnie', 'Paulley', '1972-03-26', 25, '2010-12-05');
 insert into Researcher (sex, first_name, last_name, date_of_birth, organization_id, work_starting_day) values ('male', 'Armando', 'Pigdon', '1960-08-09', 25, '1998-04-18');
 insert into Researcher (sex, first_name, last_name, date_of_birth, organization_id, work_starting_day) values ('male', 'Theobald', 'Eagleton', '1995-08-21', 25, '2021-09-01');
 insert into Researcher (sex, first_name, last_name, date_of_birth, organization_id, work_starting_day) values ('male', 'Felix', 'Rickett', '1991-07-05', 25, '2018-05-11');
@@ -335,8 +336,8 @@ insert into Project (project_title, description, funding_amount, starting_date, 
 insert into Project (project_title, description, funding_amount, starting_date, ending_date, program_id, evaluator_id, supervisor_id, executive_id, organization_id, evaluation_grade, evaluation_date) values ('Modeling distributed lag effects in epidemiological time series studies', 'Description', 105529, '2019-09-04', '2023-03-18', 27, 30, 72, 12, 23, 10.0, '2018-07-17');
 insert into Project (project_title, description, funding_amount, starting_date, ending_date, program_id, evaluator_id, supervisor_id, executive_id, organization_id, evaluation_grade, evaluation_date) values ('Economic implications for the generation of electricity from biomass fuel sources', 'Description', 202510, '2019-09-03', '2022-12-17', 3, 17, 72, 3, 23, 9.9, '2017-07-31');
 insert into Project (project_title, description, funding_amount, starting_date, ending_date, program_id, evaluator_id, supervisor_id, executive_id, organization_id, evaluation_grade, evaluation_date) values ('An enhanced security framework for home appliances in smart home', 'Description', 144177, '2011-10-31', '2014-08-11', 9, 17, 75, 9, 24, 8.6, '2010-01-02');
-insert into Project (project_title, description, funding_amount, starting_date, ending_date, program_id, evaluator_id, supervisor_id, executive_id, organization_id, evaluation_grade, evaluation_date) values ('Smart technologies in everyday life', 'Description', 279293, '2018-12-04', '2022-10-07', 7, 100, 77, 7, 25, 8.2, '2017-10-13');
-insert into Project (project_title, description, funding_amount, starting_date, ending_date, program_id, evaluator_id, supervisor_id, executive_id, organization_id, evaluation_grade, evaluation_date) values ('Green technologies in modern cities ', 'Description', 113441, '2020-07-01', '2023-08-18', 12, 16, 77, 12, 25, 1.5, '2018-06-15');
+insert into Project (project_title, description, funding_amount, starting_date, ending_date, program_id, evaluator_id, supervisor_id, executive_id, organization_id, evaluation_grade, evaluation_date) values ('Smart technologies in everyday life', 'Description', 279293, '2018-12-04', '2022-10-07', 7, 100, 79, 7, 25, 8.2, '2017-10-13');
+insert into Project (project_title, description, funding_amount, starting_date, ending_date, program_id, evaluator_id, supervisor_id, executive_id, organization_id, evaluation_grade, evaluation_date) values ('Green technologies in modern cities ', 'Description', 113441, '2020-07-01', '2023-08-18', 12, 16, 80, 12, 25, 1.5, '2018-06-15');
 insert into Project (project_title, description, funding_amount, starting_date, ending_date, program_id, evaluator_id, supervisor_id, executive_id, organization_id, evaluation_grade, evaluation_date) values ('Sampling nodes in large networks', 'Description', 157732, '2021-09-16', '2025-08-22', 13, 8, 81, 13, 25, 3.2, '2020-07-13');
 insert into Project (project_title, description, funding_amount, starting_date, ending_date, program_id, evaluator_id, supervisor_id, executive_id, organization_id, evaluation_grade, evaluation_date) values ('New approach to pattern recognition', 'Description', 203197, '2022-01-14', '2025-09-19', 13, 36, 85, 13, 26, 9.0, '2021-03-19');
 insert into Project (project_title, description, funding_amount, starting_date, ending_date, program_id, evaluator_id, supervisor_id, executive_id, organization_id, evaluation_grade, evaluation_date) values ('Importance of sign language in education', 'Description', 191860, '2020-09-12', '2023-04-01', 17, 27, 87, 2, 27, 2.5, '2019-05-26');
