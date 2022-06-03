@@ -101,18 +101,7 @@ insert into Phone (organization_id, phone) values ('28', '2109628000');
 insert into Phone (organization_id, phone) values ('29', '2103445785');
 insert into Phone (organization_id, phone) values ('30', '2109947551');
 
-/*
-insert into University (organization_id, government_funding) values (11, 10064068);
-insert into University (organization_id, government_funding) values (12, 13226617);
-insert into University (organization_id, government_funding) values (13, 5724875);
-insert into University (organization_id, government_funding) values (14, 14005835);
-insert into University (organization_id, government_funding) values (15, 10866836);
-insert into University (organization_id, government_funding) values (16, 10693918);
-insert into University (organization_id, government_funding) values (17, 5440239);
-insert into University (organization_id, government_funding) values (18, 6335997);
-insert into University (organization_id, government_funding) values (19, 5958414);
-insert into University (organization_id, government_funding) values (20, 9757099);
-*/
+
 update University set government_funding = 10064068 where organization_id = 11;
 update University set government_funding = 13226617 where organization_id = 12;
 update University set government_funding = 5724875 where organization_id = 13;
@@ -124,18 +113,7 @@ update University set government_funding = 6335997 where organization_id = 18;
 update University set government_funding = 5958414 where organization_id = 19;
 update University set government_funding = 9757099 where organization_id = 20;
 
-/*
-insert into Company (organization_id, equity) values (21, 1638396772);
-insert into Company (organization_id, equity) values (22, 3422525109);
-insert into Company (organization_id, equity) values (23, 2141502289);
-insert into Company (organization_id, equity) values (24, 3032068720);
-insert into Company (organization_id, equity) values (25, 2137281883);
-insert into Company (organization_id, equity) values (26, 3301297416);
-insert into Company (organization_id, equity) values (27, 2257110948);
-insert into Company (organization_id, equity) values (28, 1179525899);
-insert into Company (organization_id, equity) values (29, 1639188130);
-insert into Company (organization_id, equity) values (30, 476953662);
-*/
+
 update Company set equity = 1638396772 where organization_id = 21;
 update Company set equity = 3422525109 where organization_id = 22;
 update Company set equity = 2141502289 where organization_id = 23;
@@ -148,19 +126,6 @@ update Company set equity = 1639188130 where organization_id = 29;
 update Company set equity = 476953662 where organization_id = 30;
 
 
-/*
-insert into Research_center (organization_id, government_funding, private_equity) values (1, 7405765, 3948310295);
-insert into Research_center (organization_id, government_funding, private_equity) values (2, 6280408, 3782354722);
-insert into Research_center (organization_id, government_funding, private_equity) values (3, 2344651, 2896419159);
-insert into Research_center (organization_id, government_funding, private_equity) values (4, 3826690, 2145095862);
-insert into Research_center (organization_id, government_funding, private_equity) values (5, 4388808, 868923357);
-insert into Research_center (organization_id, government_funding, private_equity) values (6, 7661665, 2277927799);
-insert into Research_center (organization_id, government_funding, private_equity) values (7, 5397506, 340719364insert into Researcher (sex, first_name, last_name, date_of_birth, organization_id, work_starting_day) values ('female', 'Annabel', 'Bushby', '1983-07-25', 12, '2021-06-03');
-9);
-insert into Research_center (organization_id, government_funding, private_equity) values (8, 6129130, 2793482648);
-insert into Research_center (organization_id, government_funding, private_equity) values (9, 6439897, 2702707284);
-insert into Research_center (organization_id, government_funding, private_equity) values (10, 2171541, 633656085);
-*/
 update Research_center set government_funding = 7405765, private_equity = 3948310295 where organization_id = 1;
 update Research_center set government_funding = 6280408, private_equity = 3782354722 where organization_id = 2;
 update Research_center set government_funding = 2344651, private_equity = 2896419159 where organization_id = 3;
@@ -171,9 +136,6 @@ update Research_center set government_funding = 5397506, private_equity = 340719
 update Research_center set government_funding = 6129130, private_equity = 2793482648 where organization_id = 8;
 update Research_center set government_funding = 6439897, private_equity = 2702707284 where organization_id = 9;
 update Research_center set government_funding = 2171541, private_equity = 633656085 where organization_id = 10;
-
-
-
 
 
 insert into Researcher (sex, first_name, last_name, date_of_birth, organization_id, work_starting_day) values ('female', 'Sydelle', 'Kirk', '1978-02-12', 1, '2013-07-10');
@@ -277,6 +239,13 @@ insert into Researcher (sex, first_name, last_name, date_of_birth, organization_
 insert into Researcher (sex, first_name, last_name, date_of_birth, organization_id, work_starting_day) values ('male', 'Hubey', 'Hebbes', '1993-02-15', 30, '2020-08-09');
 insert into Researcher (sex, first_name, last_name, date_of_birth, organization_id, work_starting_day) values ('male', 'Wade', 'Antoniak', '1962-10-24', 30, '1999-02-21');
 insert into Researcher (sex, first_name, last_name, date_of_birth, organization_id, work_starting_day) values ('male', 'Wall', 'Mike', '1990-10-24', 22, '2019-02-21');
+insert into Researcher (sex, first_name, last_name, date_of_birth, organization_id, work_starting_day) values ('female', 'Anna', 'Boards', '1975-12-30', 30, '2018-05-22');
+insert into Researcher (sex, first_name, last_name, date_of_birth, organization_id, work_starting_day) values ('female', 'Lagertha', 'Hebbes', '1987-02-15', 30, '2018-08-09');
+insert into Researcher (sex, first_name, last_name, date_of_birth, organization_id, work_starting_day) values ('female', 'Torvi', 'Antoniak', '1962-01-24', 30, '2017-02-21');
+insert into Researcher (sex, first_name, last_name, date_of_birth, organization_id, work_starting_day) values ('male', 'John', 'Snow', '1975-12-30', 29, '2018-05-22');
+insert into Researcher (sex, first_name, last_name, date_of_birth, organization_id, work_starting_day) values ('male', 'Tyrion', 'Lannister', '1987-02-15', 29, '2018-08-09');
+insert into Researcher (sex, first_name, last_name, date_of_birth, organization_id, work_starting_day) values ('female', 'Riley', 'Reid', '1992-01-24', 29, '2017-02-21');
+
 
 
 insert into Executive (first_name, last_name) values ('Kirbee', 'Threlkeld');
@@ -294,6 +263,8 @@ insert into Executive (first_name, last_name) values ('Ambrosi', 'Asty');
 insert into Executive (first_name, last_name) values ('Corny', 'Pomfret');
 insert into Executive (first_name, last_name) values ('Thorny', 'Keemer');
 insert into Executive (first_name, last_name) values ('Steward', 'Sunter');
+insert into Executive (first_name, last_name) values ('Ragnar', 'Lothbrok');
+insert into Executive (first_name, last_name) values ('Daniel', 'Colt');
 
 
 insert into Project (project_title, description, funding_amount, starting_date, ending_date, program_id, evaluator_id, supervisor_id, executive_id, organization_id, evaluation_grade, evaluation_date) values ('Quantum calculations with supercold atom clouds', 'Description', 114379, '2014-09-19', '2016-09-14', 1, 92, 3, 1, 1, 3.8, '2013-09-09');
@@ -366,6 +337,28 @@ insert into Project (project_title, description, funding_amount, starting_date, 
 insert into Project (project_title, description, funding_amount, starting_date, ending_date, program_id, evaluator_id, supervisor_id, executive_id, organization_id, evaluation_grade, evaluation_date) values ('Blockchain technology in healthcare: Challenges and opportunities', 'Description', 460571, '2021-10-02', '2025-09-27', 26, 58, 100, 11, 30, 8.6, '2020-06-18');
 insert into Project (project_title, description, funding_amount, starting_date, ending_date, program_id, evaluator_id, supervisor_id, executive_id, organization_id, evaluation_grade, evaluation_date) values ('Environmental impact of information and communication technology: Unveiling the role of education in developing countries', 'Description', 169577, '2021-10-02', '2025-09-27', 26, 58, 100, 11, 30, 8.6, '2020-06-18');
 insert into Project (project_title, description, funding_amount, starting_date, ending_date, program_id, evaluator_id, supervisor_id, executive_id, organization_id, evaluation_grade, evaluation_date) values ('The environmental impact of mass coronavirus vaccinations: A point of view on huge COVID-19 vaccine waste across the globe during ongoing vaccine campaigns', 'Description', 168572, '2021-10-02', '2025-09-27', 26, 58, 100, 11, 30, 8.6, '2020-06-18');
+insert into Project (project_title, description, funding_amount, starting_date, ending_date, program_id, evaluator_id, supervisor_id, executive_id, organization_id, evaluation_grade, evaluation_date) values ('Using hydrocolloids to decrease oil absorption in banana chips', 'Description', 108572, '2020-11-03', '2022-09-27', 26, 3, 99, 16, 30, 8.6, '2018-06-18');
+insert into Project (project_title, description, funding_amount, starting_date, ending_date, program_id, evaluator_id, supervisor_id, executive_id, organization_id, evaluation_grade, evaluation_date) values ('Physico-chemical changes during different stages of MFD/FD banana chips', 'Description', 98572, '2020-01-04', '2023-04-20', 26, 4, 99, 16, 30, 8.6, '2019-06-18');
+insert into Project (project_title, description, funding_amount, starting_date, ending_date, program_id, evaluator_id, supervisor_id, executive_id, organization_id, evaluation_grade, evaluation_date) values ('The response of photosynthesis and stomatal conductance to rising [CO2]: mechanisms and environmental interactions', 'Description', 102572, '2020-02-05', '2021-04-05', 26, 5, 99, 16, 30, 8.6, '2019-06-18');
+insert into Project (project_title, description, funding_amount, starting_date, ending_date, program_id, evaluator_id, supervisor_id, executive_id, organization_id, evaluation_grade, evaluation_date) values ('The chemical effect of CO2 replacement of N2 in air on the burning velocity of CH4 and H2 premixed flames', 'Description', 102554, '2020-03-06', '2022-03-18', 26, 6, 99, 16, 30, 8.6, '2017-06-18');
+insert into Project (project_title, description, funding_amount, starting_date, ending_date, program_id, evaluator_id, supervisor_id, executive_id, organization_id, evaluation_grade, evaluation_date) values ('Estimating EU fossil fuel CO2 emissions from measurements of 14C in atmospheric CO2', 'Description', 114172, '2020-04-07', '2023-02-15', 26, 7, 99, 16, 30, 8.6, '2020-01-18');
+insert into Project (project_title, description, funding_amount, starting_date, ending_date, program_id, evaluator_id, supervisor_id, executive_id, organization_id, evaluation_grade, evaluation_date) values ('Biotechnology and microbiology of coal degradation', 'Description', 90072, '2020-05-08', '2022-05-17', 26, 8, 99, 16, 30, 8.6, '2020-02-18');
+insert into Project (project_title, description, funding_amount, starting_date, ending_date, program_id, evaluator_id, supervisor_id, executive_id, organization_id, evaluation_grade, evaluation_date) values ('The importance of nutrient management for potato production Part I: Plant nutrition and yield', 'Description', 142572, '2020-06-09', '2023-03-27', 26, 9, 99, 16, 30, 8.6, '2020-01-05');
+insert into Project (project_title, description, funding_amount, starting_date, ending_date, program_id, evaluator_id, supervisor_id, executive_id, organization_id, evaluation_grade, evaluation_date) values ('Agriculture 4.0: The future of farming technology', 'Description', 161245, '2020-07-12', '2022-10-27', 26, 10, 99, 16, 30, 8.6, '2020-01-12');
+insert into Project (project_title, description, funding_amount, starting_date, ending_date, program_id, evaluator_id, supervisor_id, executive_id, organization_id, evaluation_grade, evaluation_date) values ('Real-world carbon dioxide impacts of traffic congestion', 'Description', 198745, '2020-08-22', '2023-05-17', 26, 11, 99, 16, 30, 8.6, '2019-04-18');
+insert into Project (project_title, description, funding_amount, starting_date, ending_date, program_id, evaluator_id, supervisor_id, executive_id, organization_id, evaluation_grade, evaluation_date) values ('Cancer chemopreventive potential of apples, apple juice, and apple components', 'Description', 98745, '2020-09-24', '2022-09-10', 26, 12, 99, 16, 30, 8.6, '2018-06-01');
+insert into Project (project_title, description, funding_amount, starting_date, ending_date, program_id, evaluator_id, supervisor_id, executive_id, organization_id, evaluation_grade, evaluation_date) values ('Thermosonication as a potential quality enhancement technique of apple juice', 'Description', 98726, '2020-11-30', '2023-09-01', 26, 13, 99, 16, 30, 8.6, '2020-02-01');
+insert into Project (project_title, description, funding_amount, starting_date, ending_date, program_id, evaluator_id, supervisor_id, executive_id, organization_id, evaluation_grade, evaluation_date) values ('Characterization of tequila flavor by instrumental and sensory analysis', 'Description', 208572, '2020-11-03', '2022-09-27', 26, 3, 105, 17, 29, 8.6, '2018-06-18');
+insert into Project (project_title, description, funding_amount, starting_date, ending_date, program_id, evaluator_id, supervisor_id, executive_id, organization_id, evaluation_grade, evaluation_date) values ('What makes a strong team? Using collective intelligence to predict team performance in League of Legends', 'Description', 158572, '2020-01-04', '2023-04-20', 26, 4, 105, 17, 29, 8.6, '2019-06-18');
+insert into Project (project_title, description, funding_amount, starting_date, ending_date, program_id, evaluator_id, supervisor_id, executive_id, organization_id, evaluation_grade, evaluation_date) values ('Mechanics and Metagame: Exploring Binary Expertise in League of Legends', 'Description', 142572, '2020-02-05', '2021-04-05', 26, 5, 105, 17, 29, 8.6, '2019-06-18');
+insert into Project (project_title, description, funding_amount, starting_date, ending_date, program_id, evaluator_id, supervisor_id, executive_id, organization_id, evaluation_grade, evaluation_date) values ('A Review on blockchain applications in the agri-food sector', 'Description', 202554, '2020-03-06', '2022-03-18', 26, 6, 105, 17, 29, 8.6, '2017-06-18');
+insert into Project (project_title, description, funding_amount, starting_date, ending_date, program_id, evaluator_id, supervisor_id, executive_id, organization_id, evaluation_grade, evaluation_date) values ('Analytical methodologies for determination of artificial sweeteners in foodstuffs', 'Description', 174172, '2020-04-07', '2023-02-15', 26, 7, 105, 17, 29, 8.6, '2020-01-18');
+insert into Project (project_title, description, funding_amount, starting_date, ending_date, program_id, evaluator_id, supervisor_id, executive_id, organization_id, evaluation_grade, evaluation_date) values ('Artificial intelligence, robotics, advanced technologies and human resource management: a systematic review', 'Description', 190072, '2020-05-08', '2022-05-17', 26, 8, 105, 17, 29, 8.6, '2020-02-18');
+insert into Project (project_title, description, funding_amount, starting_date, ending_date, program_id, evaluator_id, supervisor_id, executive_id, organization_id, evaluation_grade, evaluation_date) values ('Impact of artificial intelligence, robotics, and machine learning on sales and marketing', 'Description', 182572, '2020-06-09', '2023-03-27', 26, 9, 106, 17, 29, 8.6, '2020-01-05');
+insert into Project (project_title, description, funding_amount, starting_date, ending_date, program_id, evaluator_id, supervisor_id, executive_id, organization_id, evaluation_grade, evaluation_date) values ('Magnetization of hard superconductors', 'Description', 261245, '2020-07-12', '2022-10-27', 26, 10, 106, 17, 29, 8.6, '2020-01-12');
+insert into Project (project_title, description, funding_amount, starting_date, ending_date, program_id, evaluator_id, supervisor_id, executive_id, organization_id, evaluation_grade, evaluation_date) values ('Carbon materials for supercapacitor application', 'Description', 208745, '2020-08-22', '2023-05-17', 26, 11, 106, 17, 29, 8.6, '2019-04-18');
+insert into Project (project_title, description, funding_amount, starting_date, ending_date, program_id, evaluator_id, supervisor_id, executive_id, organization_id, evaluation_grade, evaluation_date) values ('A review of supercapacitor modeling, estimation, and applications: A control/management perspective', 'Description', 198745, '2020-09-24', '2022-09-10', 26, 12, 106, 17, 29, 8.6, '2018-06-01');
+
 
 insert into Deliverable (project_id, deliverable_title, description, delivery_date) values (1, 'Deliverable1.1', 'Description', '2015-02-23');
 insert into Deliverable (project_id, deliverable_title, description, delivery_date) values (1, 'Deliverable1.2', 'Description', '2015-11-20');
@@ -550,6 +543,38 @@ insert into Concerns (scientific_id, project_id) values (9, 57);
 insert into Concerns (scientific_id, project_id) values (5, 58);
 insert into Concerns (scientific_id, project_id) values (5, 59);
 insert into Concerns (scientific_id, project_id) values (4, 60);
+insert into Concerns (scientific_id, project_id) values (2, 91);
+insert into Concerns (scientific_id, project_id) values (2, 82);
+insert into Concerns (scientific_id, project_id) values (5, 83);
+insert into Concerns (scientific_id, project_id) values (2, 84);
+insert into Concerns (scientific_id, project_id) values (1, 85);
+insert into Concerns (scientific_id, project_id) values (5, 86);
+insert into Concerns (scientific_id, project_id) values (8, 87);
+insert into Concerns (scientific_id, project_id) values (7, 88);
+insert into Concerns (scientific_id, project_id) values (2, 89);
+insert into Concerns (scientific_id, project_id) values (6, 90);
+insert into Concerns (scientific_id, project_id) values (5, 91);
+insert into Concerns (scientific_id, project_id) values (2, 85);
+insert into Concerns (scientific_id, project_id) values (9, 88);
+insert into Concerns (scientific_id, project_id) values (5, 90);
+insert into Concerns (scientific_id, project_id) values (5, 84);
+insert into Concerns (scientific_id, project_id) values (4, 86);
+insert into Concerns (scientific_id, project_id) values (2, 71);
+insert into Concerns (scientific_id, project_id) values (2, 72);
+insert into Concerns (scientific_id, project_id) values (5, 73);
+insert into Concerns (scientific_id, project_id) values (2, 74);
+insert into Concerns (scientific_id, project_id) values (2, 75);
+insert into Concerns (scientific_id, project_id) values (5, 76);
+insert into Concerns (scientific_id, project_id) values (8, 77);
+insert into Concerns (scientific_id, project_id) values (7, 78);
+insert into Concerns (scientific_id, project_id) values (2, 79);
+insert into Concerns (scientific_id, project_id) values (6, 80);
+insert into Concerns (scientific_id, project_id) values (5, 81);
+insert into Concerns (scientific_id, project_id) values (6, 75);
+insert into Concerns (scientific_id, project_id) values (9, 78);
+insert into Concerns (scientific_id, project_id) values (5, 80);
+insert into Concerns (scientific_id, project_id) values (5, 74);
+insert into Concerns (scientific_id, project_id) values (4, 76);
 
 
 insert into Works_on (researcher_id, project_id) values (1, 1);
@@ -703,3 +728,41 @@ insert into Works_on (researcher_id, project_id) values (99, 69);
 insert into Works_on (researcher_id, project_id) values (100, 69);
 insert into Works_on (researcher_id, project_id) values (100, 70);
 insert into Works_on (researcher_id, project_id) values (98, 70);
+insert into Works_on (researcher_id, project_id) values (102, 71);
+insert into Works_on (researcher_id, project_id) values (103, 71);
+insert into Works_on (researcher_id, project_id) values (104, 71);
+insert into Works_on (researcher_id, project_id) values (102, 72);
+insert into Works_on (researcher_id, project_id) values (103, 72);
+insert into Works_on (researcher_id, project_id) values (104, 73);
+insert into Works_on (researcher_id, project_id) values (102, 73);
+insert into Works_on (researcher_id, project_id) values (103, 74);
+insert into Works_on (researcher_id, project_id) values (104, 75);
+insert into Works_on (researcher_id, project_id) values (102, 76);
+insert into Works_on (researcher_id, project_id) values (103, 77);
+insert into Works_on (researcher_id, project_id) values (104, 78);
+insert into Works_on (researcher_id, project_id) values (102, 79);
+insert into Works_on (researcher_id, project_id) values (103, 80);
+insert into Works_on (researcher_id, project_id) values (104, 81);
+insert into Works_on (researcher_id, project_id) values (102, 80);
+insert into Works_on (researcher_id, project_id) values (103, 79);
+insert into Works_on (researcher_id, project_id) values (103, 78);
+insert into Works_on (researcher_id, project_id) values (102, 77);
+insert into Works_on (researcher_id, project_id) values (103, 76);
+insert into Works_on (researcher_id, project_id) values (102, 75);
+insert into Works_on (researcher_id, project_id) values (105, 91);
+insert into Works_on (researcher_id, project_id) values (106, 91);
+insert into Works_on (researcher_id, project_id) values (107, 91);
+insert into Works_on (researcher_id, project_id) values (105, 82);
+insert into Works_on (researcher_id, project_id) values (106, 82);
+insert into Works_on (researcher_id, project_id) values (107, 83);
+insert into Works_on (researcher_id, project_id) values (105, 83);
+insert into Works_on (researcher_id, project_id) values (106, 84);
+insert into Works_on (researcher_id, project_id) values (107, 85);
+insert into Works_on (researcher_id, project_id) values (105, 86);
+insert into Works_on (researcher_id, project_id) values (106, 87);
+insert into Works_on (researcher_id, project_id) values (107, 88);
+insert into Works_on (researcher_id, project_id) values (105, 89);
+insert into Works_on (researcher_id, project_id) values (106, 90);
+insert into Works_on (researcher_id, project_id) values (107, 82);
+insert into Works_on (researcher_id, project_id) values (105, 84);
+insert into Works_on (researcher_id, project_id) values (106, 89);

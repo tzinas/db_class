@@ -22,6 +22,17 @@ SELECT P.project_title, R.last_name, R.first_name
 FROM Project P, Scientific_field S, Concerns C, Researcher R, Works_on W
 WHERE S.id='1' AND S.id=C.scientific_id AND P.id=C.project_id AND (P.id IN (SELECT * FROM year_active_projects)) AND R.id=W.researcher_id AND W.project_id=P.id; 
 
+/*3.4*/
+WITH Q AS (
+	SELECT O.id as org_id, EXTRACT (YEAR FROM P.starting_date) as year, count(*) AS number_of_projects
+	FROM Organization O, Project P
+	WHERE P.organization_id=O.id 
+	GROUP BY O.id, year
+)
+SELECT DISTINCT O.name, least(Q1.year, Q2.year) AS year1, greatest(Q1.year, Q2.year) AS year2, Q1.number_of_projects
+FROM Q AS Q1, Q AS Q2, Organization O
+WHERE O.id=Q1.org_id AND Q1.org_id=Q2.org_id AND Q1.number_of_projects=Q2.number_of_projects AND ((Q1.year=Q2.year-1) OR (Q2.year=Q1.year-1)) AND Q1.number_of_projects>=10
+ORDER BY O.name
 
 /* 3.5 */
 WITH Q AS (
@@ -56,6 +67,16 @@ EXCEPT
 FROM Researcher R, young_researchers Q1, young_researchers Q2
 WHERE Q1.numberofprojects < Q2.numberofprojects AND R.id=Q1.ID);
 
+/*3.7*/
+SELECT E.last_name, E.first_name, O.name, Q.sum
+FROM	(SELECT DISTINCT ON (E.id) E.id AS ex_id, C.id AS comp_id, sum(P.funding_amount)
+		FROM Executive E, Company C, Project P
+		WHERE E.id=P.executive_id AND P.organization_id=C.organization_id
+		GROUP BY E.id, C.id
+		ORDER BY E.id, sum DESC) AS Q, Executive E, Organization O
+WHERE E.id=Q.ex_id AND O.id=(SELECT organization_id FROM Company WHERE id=Q.comp_id)
+ORDER BY Q.sum DESC
+LIMIT 5;
 
 /*3.8*/
 SELECT R.last_name, R.first_name, Q.number_of_projects
