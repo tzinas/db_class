@@ -27,7 +27,6 @@ const fetchAll = ({ entity, db }: FetchAllPros): Promise<entity[]> => {
 }
 
 const formatRows = (rows) => {
-  //return rows
   return rows.map(row => _.mapValues(row, r => r instanceof Date ? dateFormat(r, "yyyy-mm-dd"):r))
 }
 

@@ -13,6 +13,11 @@ const Navigation = () => {
           <Link href="/entities" passHref>
             <Nav.Link>Entities</Nav.Link>
           </Link>
+          {Array.apply(null, Array(8)).map((_, index) => (
+            <Link key={index} href={`/queries/3.${index + 1}`} passHref>
+              <Nav.Link>{`3.${index + 1}`}</Nav.Link>
+            </Link>
+          ))}
         </Nav>
       </Container>
     </Navbar>

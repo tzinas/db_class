@@ -5,60 +5,40 @@ import TableBody from "@mui/material/TableBody"
 import TableRow from '@mui/material/TableRow'
 import TableCell from '@mui/material/TableCell'
 
-
-type RowType = {
-  group: string
-  content: string[][]
-} | string[]
-
-type TableProps = {
-  headers: string[]
-  data: RowType[]
-};
-
-const Row = ({ row }) => {
-  if (Array.isArray(row)) {
-    return (
-      <TableRow>
-        {row.map((content, index) => 
-          <TableCell key={index}>
-            {content}
-          </TableCell>
-        )}
-      </TableRow>
-    )
-  }
-
+const Row = ({ headers, row }) => {
   return (
-    <>
-      <TableRow>
-        <TableCell rowSpan={row.content.length + 1}>
-          {row.group}
+    <TableRow>
+      {headers.map((header, index) =>
+        <TableCell key={index}>
+          {row[header]}
         </TableCell>
-      </TableRow>
-      {row.content.map((newRow: string[][], index: number) => 
-        <Row row={newRow} key={index}/>
       )}
-    </>
+    </TableRow>
   )
 }
 
-const Table = ({ headers, data }: TableProps) => {
+const Table = ({ rows }) => {
+  if (rows.length === 0) {
+    return <div style={{margin: 'auto'}}>no data</div>
+  }
+
+  const headers = Object.keys(rows[0])
+
   return (
     <TableContainer>
       <MUITable>
         <TableHead>
-          <TableRow>
+          <TableRow style={{top: 0, position: 'sticky', background: 'white', boxShadow: '0px 7px 3px -7px #000000, 5px 5px 15px 5px rgba(0,0,0,0)'}}>
             {headers.map((header, index) =>
-              <TableCell key={index}>
+              <TableCell key={index} style={{fontWeight: 'bold'}}>
                 {header}
               </TableCell>
             )}
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((row, index) =>
-            <Row row={row} key={index}/>
+          {rows.map((row, index) =>
+            <Row headers={headers} row={row} key={index}/>
           )}
         </TableBody>
       </MUITable>

@@ -26,3 +26,16 @@ export const removeUnchangableAttributes = (data, entity) => {
 
   return changedData
 }
+
+export const fetcher = async url => {
+  const res = await fetch(url)
+
+  if (!res.ok) {
+    const error = {
+      info: await res.json(),
+      status: res.status
+    }
+    throw error
+  }
+  return res.json()
+}

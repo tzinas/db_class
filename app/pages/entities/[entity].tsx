@@ -13,6 +13,8 @@ import Spinner from 'react-bootstrap/Spinner'
 import EditDeleteViewTable from 'components/EditDeleteViewTable'
 import Navigation from 'components/Navigation'
 
+import { fetcher } from 'lib/utils'
+
 const availableEntities: string[] = [
   'organization',
   'program',
@@ -49,29 +51,18 @@ const EntityPage: NextPage = () => {
   const router = useRouter()
   const { entity }: { entity?: string } = router.query
 
-  const fetcher = async url => {
-    const res = await fetch(url)
-
-    if (!res.ok) {
-      const error = {
-        info: await res.json(),
-        status: res.status
-      }
-      throw error
-    }
-    return res.json()
-  }
-
   const fetchUrl = entity ? `/api/entities/${entity}`:null
   const { data, error, mutate, isValidating } = useSWR(fetchUrl, fetcher)
 
-  if (error) return <div>failed to load: {error?.info?.err}</div>
-  if (!data) return <Spinner style={{ margin: 'auto' }} animation="grow" />
-  if (isValidating) return <Spinner style={{ margin: 'auto' }} animation="grow" />
+  if (!entity) return <Spinner style={{ margin: 'auto' }} animation="grow" />
 
   if (!availableEntities.includes(entity)) {
     return <Error statusCode={404}></Error>
   }
+
+  if (error) return <div>failed to load: {error?.info?.err}</div>
+  if (!data) return <Spinner style={{ margin: 'auto' }} animation="grow" />
+  if (isValidating) return <Spinner style={{ margin: 'auto' }} animation="grow" />
 
   return (
     <>
