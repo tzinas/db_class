@@ -9,6 +9,7 @@ import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import FloatingLabel from 'react-bootstrap/FloatingLabel'
 import Spinner from 'react-bootstrap/Spinner'
+import Alert from 'react-bootstrap/Alert'
 import _ from 'lodash'
 
 const UpdateField = ({ value, setValue }) => {
@@ -19,7 +20,7 @@ const UpdateField = ({ value, setValue }) => {
   return <input onChange={handleChange} type="text" value={value ? value:''} />
 }
 
-const DataRow = ({ row, entity, mutate }) => {
+const DataRow = ({ unchangableAttributes, row, entity, mutate, setMainError }) => {
   const [isUpdating, setIsUpdating] = useState(false)
   const [updateError, setUpdateError] = useState<string>()
   const [isDeleting, setIsDeleting] = useState(false)
@@ -44,8 +45,11 @@ const DataRow = ({ row, entity, mutate }) => {
       body: JSON.stringify(formattedRow)
     })
 
+    const responseMessage = await response.json()
+
     if (!response.ok) {
       setUpdateError('error')
+      setMainError(responseMessage.err)
     } else {
       mutate(`/api/entities/${entity}`)
     }
@@ -60,8 +64,11 @@ const DataRow = ({ row, entity, mutate }) => {
       method: 'DELETE'
     })
 
+    const responseMessage = await response.json()
+
     if (!response.ok) {
       setDeleteError('error')
+      setMainError(responseMessage.err)
     } else {
       mutate(`/api/entities/${entity}`)
     }
@@ -79,7 +86,11 @@ const DataRow = ({ row, entity, mutate }) => {
     <TableRow>
       {Object.entries(updatedRow).map(([key, cell]) =>
         <TableCell key={key}>
-          <UpdateField value={cell} setValue={value => setValue(key, value)}/>
+          {unchangableAttributes.includes(key) ?
+            <>{cell}</>
+          :
+            <UpdateField value={cell} setValue={value => setValue(key, value)}/>
+          }
         </TableCell>
       )}
       <TableCell style={{minWidth: '95px'}}>
@@ -120,7 +131,7 @@ const DataRow = ({ row, entity, mutate }) => {
   )
 }
 
-const CreateEntity = ({ headers, entity, mutate }) => {
+const CreateEntity = ({ unchangableAttributes, headers, entity, mutate, setMainError }) => {
   const temp = {}
 
   headers.forEach(header => {
@@ -145,8 +156,11 @@ const CreateEntity = ({ headers, entity, mutate }) => {
       body: JSON.stringify(newEntity)
     })
 
+    const responseMessage = await response.json()
+
     if (!response.ok) {
       setCreateError('error')
+      setMainError(responseMessage.err)
     } else {
       mutate(`/api/entities/${entity}`)
     }
@@ -158,12 +172,16 @@ const CreateEntity = ({ headers, entity, mutate }) => {
     <>
       {headers.map((header, index) =>
         <TableCell key={index}>
-          <FloatingLabel
-            controlId="floatingInput"
-            label={header}
-          >
-            <Form.Control value={newEntity[header]} onChange={(e) => handleChange(e, header)} type="email" placeholder="name@example.com" />
-          </FloatingLabel>
+          {unchangableAttributes.includes(header) ?
+            <>{header}</>
+          :
+            <FloatingLabel
+              controlId="floatingInput"
+              label={header}
+            >
+              <Form.Control value={newEntity[header]} onChange={(e) => handleChange(e, header)} type="email" placeholder="name@example.com" />
+            </FloatingLabel>
+          }
         </TableCell>
       )}
       <TableCell style={{ textAlign: 'center', background: 'white', position: 'sticky', top: '0'}} colSpan={2}>
@@ -185,7 +203,8 @@ const CreateEntity = ({ headers, entity, mutate }) => {
 
 }
 
-const EditDeleteViewTable = ({ rows, entity, mutate }) => {
+const EditDeleteViewTable = ({ rows, unchangableAttributes, entity, mutate }) => {
+  const [mainError, setMainError] = useState()
   if (rows.length === 0) {
     return <div style={{margin: 'auto'}}>no data</div>
   }
@@ -194,20 +213,27 @@ const EditDeleteViewTable = ({ rows, entity, mutate }) => {
 
 
   return (
-    <TableContainer style={{background: 'white'}}>
-      <MUITable>
-        <TableHead>
-          <TableRow style={{ background: 'white', position: 'sticky', top: '0',  boxShadow: '0px 7px 3px -7px #000000, 5px 5px 15px 5px rgba(0,0,0,0)' }}>
-            <CreateEntity headers={headers} entity={entity} mutate={mutate}/>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row, index) =>
-            <DataRow key={`${entity}-${index}`} row={row} entity={entity} mutate={mutate}/>
-          )}
-        </TableBody>
-      </MUITable>
-    </TableContainer>
+    <>
+      {mainError &&
+        <Alert variant="danger" onClose={() => setMainError(null)} dismissible>
+          {mainError}
+        </Alert>
+      }
+      <TableContainer style={{background: 'white'}}>
+        <MUITable>
+          <TableHead>
+            <TableRow style={{ background: 'white', position: 'sticky', top: '0',  boxShadow: '0px 7px 3px -7px #000000, 5px 5px 15px 5px rgba(0,0,0,0)' }}>
+              <CreateEntity unchangableAttributes={unchangableAttributes} setMainError={setMainError} headers={headers} entity={entity} mutate={mutate}/>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows.map((row, index) =>
+              <DataRow unchangableAttributes={unchangableAttributes} setMainError={setMainError} key={`${entity}-${index}`} row={row} entity={entity} mutate={mutate}/>
+            )}
+          </TableBody>
+        </MUITable>
+      </TableContainer>
+    </>
   )
 }
 

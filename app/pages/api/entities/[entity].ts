@@ -1,6 +1,9 @@
 import db from 'lib/db'
 import logger from 'lib/logger'
 import _ from 'lodash'
+import dateFormat from "dateformat"
+
+import { removeUnchangableAttributes, unchangableAttributes } from 'lib/utils'
 
 type entity ={ [key: string]: string | number }
 
@@ -16,11 +19,16 @@ type FetchAllPros = {
 }
 
 const createEntity = async ({ entity, data, db }: EntityProps): Promise<void> => {
-  await db`INSERT INTO ${db(entity)} ${db(data)}` // e.g. INSERT INTO Organization(name, ...) VALUES(Org1, ...)
+  await db`INSERT INTO ${db(entity)} ${db(removeUnchangableAttributes(data, entity))}` // e.g. INSERT INTO Organization(name, ...) VALUES(Org1, ...)
 }
 
 const fetchAll = ({ entity, db }: FetchAllPros): Promise<entity[]> => {
-  return db`SELECT * FROM ${db(entity)}` // e.g. SELECT * FROM Organization
+  return db`SELECT * FROM ${db(entity)} ORDER BY id` // e.g. SELECT * FROM Organization
+}
+
+const formatRows = (rows) => {
+  //return rows
+  return rows.map(row => _.mapValues(row, r => r instanceof Date ? dateFormat(r, "yyyy-mm-dd"):r))
 }
 
 const responses = {
@@ -30,10 +38,10 @@ const responses = {
     try {
       const rows = await fetchAll({ entity, db })
       logger.info(`${rows.length} ${entity}s fetched successfully`)
-      return res.status(200).json({ message: `${rows.length} ${entity}s fetched succressfully`, rows: rows })
+      return res.status(200).json({ message: `${rows.length} ${entity}s fetched succressfully`, rows: formatRows(rows), unchangableAttributes: unchangableAttributes.all.concat(unchangableAttributes[entity] ? unchangableAttributes[entity]:[]) })
     } catch (err) {
       logger.debug(`Error fetching ${entity}s:`, err)
-      return res.status(500).json({ err: `Error fetching ${entity}s` })
+      return res.status(500).json({ err: `Error fetching ${entity}s: ${err}` })
     }
   },
   POST: async (req, res) => {
@@ -45,7 +53,7 @@ const responses = {
       return res.status(200).json({ message: `Successfully created ${entity}` })
     } catch (err) {
       logger.debug(`Error creating ${entity}:`, err)
-      return res.status(500).json({ err: `Error creating ${entity}` })
+      return res.status(500).json({ err: `Error creating ${entity}: ${err}` })
     }
   }
 }

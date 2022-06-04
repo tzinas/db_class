@@ -2,6 +2,8 @@ import db from 'lib/db'
 import logger from 'lib/logger'
 import _ from 'lodash'
 
+import { removeUnchangableAttributes } from 'lib/utils'
+
 type entity ={ [key: string]: string | number }
 
 type UpdateEntityProps = {
@@ -17,8 +19,9 @@ type DeleteEntityProps = {
   db: typeof db
 }
 
+
 const updateEntity = async ({ entity, id, data, db }: UpdateEntityProps): Promise<void> => {
-  await db`UPDATE ${db(entity)} SET ${db(data)} WHERE id = ${id}`
+  await db`UPDATE ${db(entity)} SET ${db(removeUnchangableAttributes(data, entity))} WHERE id = ${id}`
 }
 
 const deleteEntity = async ({ entity, id, db }: DeleteEntityProps): Promise<void> => {
@@ -35,20 +38,19 @@ const responses = {
       return res.status(200).json({ message: `${entity} with id=${id} deleted` })
     } catch (err) {
       logger.debug(`Error deleting ${entity}:`, err)
-      return res.status(500).json({ err: `Error deleting ${entity}` })
+      return res.status(500).json({ err: `Error deleting ${entity}: ${err}` })
     }
   },
   PUT: async (req, res) => {
     const { entity, id } = req.query
 
-    console.log(entity, id)
     try {
       await updateEntity({ entity, id, data: JSON.parse(req.body), db })
       logger.info(`${entity} with id = ${id} updated`)
       return res.status(200).json({ message: `Successfully updated ${entity}` })
     } catch (err) {
       logger.debug(`Error updating ${entity}:`, err)
-      return res.status(500).json({ err: `Error updating ${entity}` })
+      return res.status(500).json({ err: `Error updating ${entity}: ${err}` })
     }
   }
 }

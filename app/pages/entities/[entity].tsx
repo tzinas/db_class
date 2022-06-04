@@ -73,13 +73,12 @@ const EntityPage: NextPage = () => {
     return <Error statusCode={404}></Error>
   }
 
-  console.log(data, error)
   return (
     <>
       <Navigation />
       <EntityNavbar />
-      <div style={{width: '100%', height: '100%', flexGrow: 1, minHeight: '500px', display: 'flex'}}>
-        <EditDeleteViewTable entity={entity} rows={data.rows} mutate={mutate}/>
+      <div style={{width: '100%', height: '100%', flexGrow: 1, minHeight: '500px', display: 'flex', flexDirection: 'column'}}>
+        <EditDeleteViewTable unchangableAttributes={data.unchangableAttributes} entity={entity} rows={data.rows} mutate={mutate}/>
       </div>
     </>
   )
