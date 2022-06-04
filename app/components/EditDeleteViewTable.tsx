@@ -179,7 +179,7 @@ const CreateEntity = ({ unchangableAttributes, headers, entity, mutate, setMainE
               controlId="floatingInput"
               label={header}
             >
-              <Form.Control value={newEntity[header]} onChange={(e) => handleChange(e, header)} type="text" />
+              <Form.Control value={newEntity[header]} onChange={(e) => handleChange(e, header)} type="text" placeholder="" />
             </FloatingLabel>
           }
         </TableCell>

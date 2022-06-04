@@ -77,7 +77,7 @@ const QueryPage: NextPage = () => {
               controlId="floatingInput"
               label="Duration (years)"
             >
-              <Form.Control value={duration ? duration:""} onChange={(e) => setDuration(e.target.value)} type="number" />
+              <Form.Control value={duration ? duration:""} onChange={(e) => setDuration(e.target.value)} type="number" placeholder=""/>
             </FloatingLabel>
             <div style={{marginLeft: '30px', flexGrow: 1}}>
               <Select title='Executives' data={formattedExecutives} handleSelect={handleSelect} />
