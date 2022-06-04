@@ -4,6 +4,16 @@ import _ from 'lodash'
 import dateFormat from "dateformat"
 
 const ACCEPTED_QUERIES = {
+  3.21: {
+    query: (db) => {
+      return db`SELECT * FROM researchers_projects`
+    }
+  },
+  3.22: {
+    query: (db) => {
+      return db`SELECT * FROM projects_per_rescenter`
+    }
+  },
   3.4: {
     title: "3.4",
     description: "Organizations with same number of projects 2 years in a row with more than 10 projects each of those years",
@@ -103,7 +113,7 @@ const ACCEPTED_QUERIES = {
 }
 
 const fetchQuery = async ({ query, db }) => {
-  return await ACCEPTED_QUERIES[query].query(db)
+  return ACCEPTED_QUERIES[query].query(db)
 }
 
 const responses = {
@@ -112,7 +122,6 @@ const responses = {
 
     try {
       const rows = await fetchQuery({ query, db })
-      console.log(rows)
       logger.info(`${rows.length} query(${query}) rows fetched successfully`)
       return res.status(200).json({ message: `${rows.length} query(${query}) rows fetched successfully`, rows: rows, title: ACCEPTED_QUERIES[query].title, description: ACCEPTED_QUERIES[query].description })
     } catch (err) {

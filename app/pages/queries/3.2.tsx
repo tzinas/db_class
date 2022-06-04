@@ -11,28 +11,20 @@ import Table from 'components/Table'
 
 import { fetcher } from 'lib/utils'
 
-const availableQueries: string[] = [
-  '3.4',
-  '3.5',
-  '3.6',
-  '3.7',
-  '3.8'
-]
+const View = ({ view, isActive }) => {
+  const fetchUrl = view && isActive ? `/api/queries/3.2${view}`:null
+  const { data, error } = useSWR(fetchUrl, fetcher)
 
-const View = () => {
-  return (
-    <></>
-  )
+  if (!view) return <Spinner style={{ margin: 'auto' }} animation="grow" />
+
+  if (error) return <div>failed to load: {error?.info?.err}</div>
+  if (!data) return <Spinner style={{ margin: 'auto' }} animation="grow" />
+
+  return <Table rows={data.rows}/>
 }
 
 const QueryPage: NextPage = () => {
   const [tab, setTab] = useState(1)
-
-  const fetchUrl = `/api/queries`
-  //const { data, error } = useSWR(fetchUrl, fetcher)
-
-  //if (error) return <div>failed to load: {error?.info?.err}</div>
-  //if (!data) return <Spinner style={{ margin: 'auto' }} animation="grow" />
 
   const handleSelect = (e) => {
     setTab(e)
@@ -42,16 +34,17 @@ const QueryPage: NextPage = () => {
     <>
       <Navigation />
       <div style={{margin: '10px 15px'}}>
-          <h1>3.2</h1>
-          {tab == 1 && <span>Projects per researcher</span>}
-          {tab == 2 && <span>Number of projects per research center</span>}
-        </div>
+        <h1>3.2</h1>
+        {tab == 1 && <span>Projects per researcher</span>}
+        {tab == 2 && <span>Number of projects per research center</span>}
+      </div>
       <div style={{width: '100%', height: '100%', flexGrow: 1, minHeight: '500px', display: 'flex', flexDirection: 'column'}}>
         <Tabs defaultActiveKey={1} style={{marginTop: '20px'}} onSelect={handleSelect} id="uncontrolled-tab-example" className="mb-3">
-          <Tab eventKey={1} title="View 1">
-          </Tab>
-          <Tab eventKey={2} title="View 2">
-          </Tab>
+          {([1,2]).map(view => (
+            <Tab key={view} eventKey={view} title={`View ${view}`}>
+              <View view={view} isActive={view == tab}/>
+            </Tab>
+          ))}
         </Tabs>
       </div>
     </>
