@@ -1,3 +1,17 @@
+/* 3.1 */
+/*projects per program*/
+/*starting_date, duration, executive_id by user (in ui code)*/
+SELECT PG.name, PJ.name
+FROM Program PG, Project PJ
+WHERE PJ.program_id=PG.id AND PJ.starting_date='2022-01-01' AND PJ.duration='1' AND PJ.executive_id='1'
+ORDER BY PG.name, PJ.name
+
+/*researchers per project*/
+SELECT P.project_title, R.last_name, R.first_name
+FROM Project P, Researcher R, Works_on
+WHERE W.project_id=P.id AND W.researcher_id=R.id 
+ORDER BY P.project_title, R.last_name, R.first_name
+
 /* 3.2 */
 CREATE VIEW researchers_projects AS
 	SELECT R.last_name, R.first_name, P.project_title
@@ -13,7 +27,7 @@ CREATE VIEW projects_per_rescenter AS
 
 
 /* 3.3 */
-/*scientific field by user */
+/*scientific field by user (in ui code)*/
 WITH year_active_projects AS (
 	SELECT id
 	FROM Project
@@ -22,7 +36,7 @@ SELECT P.project_title, R.last_name, R.first_name
 FROM Project P, Scientific_field S, Concerns C, Researcher R, Works_on W
 WHERE S.id='1' AND S.id=C.scientific_id AND P.id=C.project_id AND (P.id IN (SELECT * FROM year_active_projects)) AND R.id=W.researcher_id AND W.project_id=P.id; 
 
-/*3.4*/
+/* 3.4 */
 WITH Q AS (
 	SELECT O.id as org_id, EXTRACT (YEAR FROM P.starting_date) as year, count(*) AS number_of_projects
 	FROM Organization O, Project P
@@ -67,7 +81,7 @@ EXCEPT
 FROM Researcher R, young_researchers Q1, young_researchers Q2
 WHERE Q1.numberofprojects < Q2.numberofprojects AND R.id=Q1.ID);
 
-/*3.7*/
+/* 3.7 */
 SELECT E.last_name, E.first_name, O.name, Q.sum
 FROM	(SELECT DISTINCT ON (E.id) E.id AS ex_id, C.id AS comp_id, sum(P.funding_amount)
 		FROM Executive E, Company C, Project P
@@ -78,7 +92,7 @@ WHERE E.id=Q.ex_id AND O.id=(SELECT organization_id FROM Company WHERE id=Q.comp
 ORDER BY Q.sum DESC
 LIMIT 5;
 
-/*3.8*/
+/* 3.8 */
 SELECT R.last_name, R.first_name, Q.number_of_projects
 FROM   Researcher R,	(SELECT R.id AS id, count(DISTINCT P.id) AS number_of_projects
 			FROM Researcher R, Project P, Deliverable D, Works_on W
