@@ -24,8 +24,7 @@ CREATE VIEW projects_per_rescenter AS
 	FROM Organization O, Project P, Research_center R
 	WHERE O.id=P.organization_id AND O.id=R.organization_id
 	GROUP BY O.name 
-
-
+	
 /* 3.3 */
 /*scientific field by user (in ui code)*/
 WITH year_active_projects AS (
@@ -53,8 +52,8 @@ WITH Q AS (
 	SELECT C1.scientific_id as id1, C2.scientific_id as id2, C1.project_id
 	FROM Concerns C1, Concerns C2
 	WHERE C1.project_id=C2.project_id AND C1.scientific_id<>C2.scientific_id)
-SELECT S1.field_name, S2.field_name
-FROM 	(SELECT DISTINCT least(sid1, sid2) AS sid1, greatest(sid1, sid2) AS sid2, allmax.times
+SELECT S1.field_name, S2.field_name, F.number_of_projects
+FROM 	(SELECT DISTINCT least(sid1, sid2) AS sid1, greatest(sid1, sid2) AS sid2, allmax.times AS number_of_projects
 	FROM 	(SELECT Q.id1 as sid1, Q.id2 as sid2, count(*) as times
 		FROM Q
 		GROUP BY (Q.id1, Q.id2)) AS allmax ORDER BY allmax.times DESC) AS F, Scientific_field S1, Scientific_field S2
@@ -69,15 +68,15 @@ WITH active_projects AS (
 	WHERE ending_date>current_date),
 	
 	young_researchers AS (
-	SELECT R.id as ID, R.last_name, R.first_name, count(*) as numberofprojects
+	SELECT R.id as ID, R.last_name, R.first_name, count(*) as numberofprojects, ROUND(CAST(current_date-R.date_of_birth AS DECIMAL)) AS age 
 	FROM Researcher R, Project P, Works_on W
 	WHERE R.id=W.researcher_id AND W.project_id=P.id AND (P.id IN (SELECT * FROM active_projects)) AND current_date-R.date_of_birth<14600 
 	GROUP BY R.id)
-(SELECT R.last_name, R.first_name, Q.numberofprojects
+(SELECT R.last_name, R.first_name, Q.numberofprojects, Q.age
 FROM Researcher R, young_researchers Q
 WHERE R.id=Q.ID)
 EXCEPT
-(SELECT R.last_name, R.first_name, Q1.numberofprojects
+(SELECT R.last_name, R.first_name, Q1.numberofprojects, Q1.age
 FROM Researcher R, young_researchers Q1, young_researchers Q2
 WHERE Q1.numberofprojects < Q2.numberofprojects AND R.id=Q1.ID);
 

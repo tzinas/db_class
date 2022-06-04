@@ -235,3 +235,15 @@ CREATE TRIGGER Evaluator_in_org BEFORE INSERT OR UPDATE ON Project
 FOR EACH ROW
 EXECUTE FUNCTION check_evaluator();
 
+/* views from 3.2 */
+CREATE VIEW researchers_projects AS
+	SELECT R.last_name, R.first_name, P.project_title
+	FROM Researcher R, Project P, Works_on W
+	WHERE R.id=W.researcher_id AND W.project_id=P.id
+	ORDER BY (R.last_name, R.first_name);
+
+CREATE VIEW projects_per_rescenter AS
+	SELECT O.name, count(*) as number_of_projects
+	FROM Organization O, Project P, Research_center R
+	WHERE O.id=P.organization_id AND O.id=R.organization_id
+	GROUP BY O.name;
