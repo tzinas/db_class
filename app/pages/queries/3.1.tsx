@@ -38,10 +38,11 @@ const Researchers = ({ projectId, setShowWithId }) => {
           {error &&
             <div>failed to load: {error?.info?.err}</div>
           }
-          {!data &&
+          {!data ?
             <Spinner style={{ margin: 'auto' }} animation="grow" />
+          :
+            <Table rows={data.rows}/>
           }
-          <Table rows={data.rows}/>
         </Modal.Body>
       </Modal>
   )

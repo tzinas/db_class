@@ -44,7 +44,6 @@ const formatRows = (rows) => {
 const responses = {
   GET: async (req, res) => {
     const { executive, duration, fromDate, toDate, projectId } = req.query
-    console.log(executive, duration, fromDate, toDate)
 
     try {
       const rows = await fetchQuery({ executive, duration, fromDate, toDate, projectId, db })
