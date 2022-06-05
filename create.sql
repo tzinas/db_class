@@ -245,7 +245,7 @@ BEGIN
 END;
 $Res_org_id_update$ LANGUAGE plpgsql;
 
-CREATE TRIGGER Res_org_id_update BEFORE UPDATE ON University
+CREATE TRIGGER Res_org_id_update BEFORE UPDATE ON Researcher
 FOR EACH ROW 
 EXECUTE FUNCTION update_org_id();
 
