@@ -160,7 +160,7 @@ CREATE RULE delete_protect3 AS ON DELETE TO Research_center DO INSTEAD NOTHING;
 CREATE FUNCTION update_org_type() RETURNS TRIGGER AS $Org_type_update$
 BEGIN
   IF (NEW.organization_id <> OLD.organization_id) THEN 
-    RAISE EXCEPTION 'Cannot delete';
+    RAISE EXCEPTION 'Cannot update';
   END IF;
   RETURN NEW;
 END;
@@ -239,7 +239,7 @@ EXECUTE FUNCTION check_evaluator();
 CREATE FUNCTION update_org_id() RETURNS TRIGGER AS $Res_org_id_update$
 BEGIN
   IF (NEW.organization_id <> OLD.organization_id) THEN 
-    RAISE EXCEPTION 'Cannot delete';
+    RAISE EXCEPTION 'Cannot update';
   END IF;
   RETURN NEW;
 END;
