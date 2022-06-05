@@ -218,7 +218,7 @@ const CreateEntity = ({ fetchedAttributes, unchangableAttributes, hidden, select
   return (
     <>
       {headers.map((header, index) => {
-        if (unchangableAttributes.includes(header) && !hidden.includes(header)) {
+        if ((unchangableAttributes.includes(header) && !hidden.includes(header)) || entity === "university" || entity === "research_center" || entity === "company") {
           return (
             <TableCell key={index}>
               {header}
@@ -263,9 +263,11 @@ const CreateEntity = ({ fetchedAttributes, unchangableAttributes, hidden, select
           <Spinner size="sm" variant="primary" style={{ margin: 'auto' }} animation="grow" />
         :
           <div style={{display: 'flex', flexDirection: 'column'}}>
-            <Button onClick={handleCreate} style={{ width: '100%' }} variant="primary">
+            {!(entity === "university" || entity === "research_center" || entity === "company") &&
+            < Button onClick={handleCreate} style={{ width: '100%' }} variant="primary">
               Create
             </Button>
+            }
             {createError &&
             <span style={{color: 'red'}}>{createError}</span>
             }
