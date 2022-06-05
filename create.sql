@@ -40,21 +40,21 @@ CREATE TABLE Phone(
 
 CREATE TABLE University(
   id SERIAL PRIMARY KEY, 
-  organization_id INT,
+  organization_id INT UNIQUE,
   FOREIGN KEY (organization_id) REFERENCES Organization(id) ON DELETE CASCADE ON UPDATE CASCADE,
   government_funding NUMERIC
 );
 
 CREATE TABLE Company(
   id SERIAL PRIMARY KEY, 
-  organization_id INT,
+  organization_id INT UNIQUE,
   FOREIGN KEY (organization_id) REFERENCES Organization(id) ON DELETE CASCADE ON UPDATE CASCADE,
   equity NUMERIC
 );
 
 CREATE TABLE Research_center(
   id SERIAL PRIMARY KEY,  
-  organization_id INT,
+  organization_id INT UNIQUE,
   FOREIGN KEY (organization_id) REFERENCES Organization(id) ON DELETE CASCADE ON UPDATE CASCADE,
   government_funding NUMERIC,
   private_equity NUMERIC
@@ -249,6 +249,30 @@ CREATE TRIGGER Res_org_id_update BEFORE UPDATE ON Researcher
 FOR EACH ROW 
 EXECUTE FUNCTION update_org_id();
 
+CREATE FUNCTION update_org_id() RETURNS TRIGGER AS $Res_org_id_update$
+BEGIN
+  IF (NEW.organization_id <> OLD.organization_id) THEN 
+    RAISE EXCEPTION 'Cannot update';
+  END IF;
+  RETURN NEW;
+END;
+$Res_org_id_update$ LANGUAGE plpgsql;
+
+CREATE TRIGGER Res_org_id_update BEFORE UPDATE ON Researcher
+FOR EACH ROW 
+
+CREATE FUNCTION no_update_org_type() RETURNS TRIGGER AS $No_org_type_update$
+BEGIN
+  IF (NEW.organization_type <> OLD.organization_type) THEN 
+    RAISE EXCEPTION 'Cannot update';
+  END IF;
+  RETURN NEW;
+END;
+$No_org_type_update$ LANGUAGE plpgsql;
+
+CREATE TRIGGER No_org_type_update BEFORE UPDATE ON Organization
+FOR EACH ROW 
+EXECUTE FUNCTION no_update_org_type();
 
 /* views from 3.2 */
 CREATE VIEW researchers_projects AS
