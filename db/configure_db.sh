@@ -6,3 +6,4 @@ psql postgres -U db_class -c "CREATE DATABASE db_class OWNER db_class"
 
 psql db_class -U db_class -f create.sql
 psql db_class -U db_class -f data.sql
+psql db_class -U db_class -f indexes.sql
