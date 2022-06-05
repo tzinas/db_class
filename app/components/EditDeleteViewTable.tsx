@@ -218,7 +218,7 @@ const CreateEntity = ({ fetchedAttributes, unchangableAttributes, hidden, select
   return (
     <>
       {headers.map((header, index) => {
-        if ((unchangableAttributes.includes(header) && !hidden.includes(header)) || entity === "university" || entity === "research_center" || entity === "company") {
+        if ((unchangableAttributes.includes(header) || entity === "university" || entity === "research_center" || entity === "company") && !hidden.includes(header)) {
           return (
             <TableCell key={index}>
               {header}
