@@ -12,7 +12,7 @@ import { fetcher } from 'lib/utils'
 
 const Content = ({ scientificField }) => {
   const fetchUrl = scientificField ? `/api/queries/3.3?id=${scientificField}`:null
-  const { data, error } = useSWR(fetchUrl, fetcher)
+  const { data, error } = useSWR(fetchUrl, fetcher, {revalidateOnFocus: false, revalidateOnReconnect: false})
 
   if (!scientificField) return <Spinner style={{ margin: 'auto' }} animation="grow" />
 
@@ -26,7 +26,7 @@ const QueryPage: NextPage = () => {
   const [scientificField, setScientificField] = useState()
 
   const fetchUrl = `/api/entities/scientific_field`
-  const { data, error } = useSWR(fetchUrl, fetcher)
+  const { data, error } = useSWR(fetchUrl, fetcher, {revalidateOnFocus: false, revalidateOnReconnect: false})
 
   if (error) return <div>failed to load: {error?.info?.err}</div>
   if (!data) return <Spinner style={{ margin: 'auto' }} animation="grow" />

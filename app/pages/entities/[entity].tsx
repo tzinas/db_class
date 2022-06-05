@@ -52,7 +52,7 @@ const EntityPage: NextPage = () => {
   const { entity }: { entity?: string } = router.query
 
   const fetchUrl = entity ? `/api/entities/${entity}`:null
-  const { data, error, mutate, isValidating } = useSWR(fetchUrl, fetcher)
+  const { data, error, mutate, isValidating } = useSWR(fetchUrl, fetcher, {revalidateOnFocus: false, revalidateOnReconnect: false})
 
   if (!entity) return <Spinner style={{ margin: 'auto' }} animation="grow" />
 
@@ -69,7 +69,7 @@ const EntityPage: NextPage = () => {
       <Navigation />
       <EntityNavbar />
       <div style={{width: '100%', height: '100%', flexGrow: 1, minHeight: '500px', display: 'flex', flexDirection: 'column'}}>
-        <EditDeleteViewTable unchangableAttributes={data.unchangableAttributes} entity={entity} rows={data.rows} mutate={mutate}/>
+        <EditDeleteViewTable hidden={data.hidden} selectable={data.selectable} unchangableAttributes={data.unchangableAttributes} entity={entity} rows={data.rows} mutate={mutate}/>
       </div>
     </>
   )

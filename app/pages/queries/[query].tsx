@@ -24,7 +24,7 @@ const QueryPage: NextPage = () => {
   const { query }: { query?: string } = router.query
 
   const fetchUrl = query ? `/api/queries/${query}`:null
-  const { data, error } = useSWR(fetchUrl, fetcher)
+  const { data, error } = useSWR(fetchUrl, fetcher, {revalidateOnFocus: false, revalidateOnReconnect: false})
 
   if (!query) return <Spinner style={{ margin: 'auto' }} animation="grow" />
 

@@ -2,7 +2,14 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import Spinner from 'react-bootstrap/Spinner'
 
-const Select = ({ title, handleSelect, data }) => {
+type SelectParams = {
+  title: string
+  handleSelect
+  data
+  value?
+}
+
+const Select = ({ title, handleSelect, data, value }: SelectParams) => {
   if (!data) return <Spinner style={{ margin: 'auto' }} animation="grow" />
 
   return (
@@ -10,6 +17,7 @@ const Select = ({ title, handleSelect, data }) => {
       id="combo-box-demo"
       options={data}
       sx={{ width: 300 }}
+      value={value}
       onChange={handleSelect}
       renderInput={(params) => <TextField {...params} label={title} />}
     />

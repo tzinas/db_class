@@ -2,6 +2,7 @@ import db from 'lib/db'
 import logger from 'lib/logger'
 import _ from 'lodash'
 import dateFormat from "dateformat"
+import { hidden, selectable } from 'lib/entityDetails'
 
 import { removeUnchangableAttributes, unchangableAttributes } from 'lib/utils'
 
@@ -37,7 +38,12 @@ const responses = {
     try {
       const rows = await fetchAll({ entity, db })
       logger.info(`${rows.length} ${entity}s fetched successfully`)
-      return res.status(200).json({ message: `${rows.length} ${entity}s fetched succressfully`, rows: formatRows(rows), unchangableAttributes: unchangableAttributes.all.concat(unchangableAttributes[entity] ? unchangableAttributes[entity]:[]) })
+      return res.status(200).json({
+        message: `${rows.length} ${entity}s fetched succressfully`,
+        rows: formatRows(rows), unchangableAttributes: unchangableAttributes.all.concat(unchangableAttributes[entity] ? unchangableAttributes[entity]:[]),
+        hidden,
+        selectable 
+      })
     } catch (err) {
       logger.debug(`Error fetching ${entity}s:`, err)
       return res.status(500).json({ err: `Error fetching ${entity}s: ${err}` })

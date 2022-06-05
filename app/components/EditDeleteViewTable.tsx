@@ -1,4 +1,7 @@
 import { useState } from 'react'
+import useSWR from 'swr'
+import _ from 'lodash'
+
 import TableContainer from '@mui/material/TableContainer'
 import MUITable from '@mui/material/Table'
 import TableHead from '@mui/material/TableHead'
@@ -10,7 +13,12 @@ import Form from 'react-bootstrap/Form'
 import FloatingLabel from 'react-bootstrap/FloatingLabel'
 import Spinner from 'react-bootstrap/Spinner'
 import Alert from 'react-bootstrap/Alert'
-import _ from 'lodash'
+
+import Select from 'components/Select'
+
+import { fetcher } from 'lib/utils'
+
+import styles from 'styles/select.module.scss'
 
 const UpdateField = ({ value, setValue }) => {
   const handleChange = (event) => {
@@ -20,7 +28,7 @@ const UpdateField = ({ value, setValue }) => {
   return <input onChange={handleChange} type="text" value={value ? value:''} />
 }
 
-const DataRow = ({ unchangableAttributes, row, entity, mutate, setMainError }) => {
+const DataRow = ({ unchangableAttributes, fetchedAttributes, hidden, selectable, row, entity, mutate, setMainError }) => {
   const [isUpdating, setIsUpdating] = useState(false)
   const [updateError, setUpdateError] = useState<string>()
   const [isDeleting, setIsDeleting] = useState(false)
@@ -82,17 +90,52 @@ const DataRow = ({ unchangableAttributes, row, entity, mutate, setMainError }) =
     setUpdatedRow(tempRow)
   }
 
+  const handleSelect = (field, value) => {
+    const tempRow = _.clone(updatedRow)
+    tempRow[field] = value ? value.id:""
+    setUpdatedRow(tempRow)
+  }
+
   return (
     <TableRow>
-      {Object.entries(updatedRow).map(([key, cell]) =>
-        <TableCell key={key}>
-          {unchangableAttributes.includes(key) ?
-            <>{cell}</>
-          :
-            <UpdateField value={cell} setValue={value => setValue(key, value)}/>
-          }
-        </TableCell>
-      )}
+      {Object.entries(updatedRow).map(([key, cell]) => {
+        if (unchangableAttributes.includes(key) && !hidden.includes(key)) {
+          <TableCell key={key}>
+            {key}
+          </TableCell>
+        }
+
+        if (selectable[key] && !hidden.includes(key)) {
+          const formattedData = fetchedAttributes[key].data.rows.map(h => {
+            let label = h[selectable[key].columns[0]]
+
+            selectable[key].columns.slice(1).forEach(column => {
+              label += ` ${h[column]}`
+            })
+
+            return {
+              id: h.id,
+              label
+            }
+          })
+
+          const value = _.find(formattedData, ['id', Number(updatedRow[key])])
+
+          return (
+            <TableCell key={key}>
+              <Select value={value}  title={selectable[key].title} data={formattedData} handleSelect={(_, value) => handleSelect(key, value)} />
+            </TableCell>
+          )
+        }
+
+        if (!hidden.includes(key)) {
+          return (
+            <TableCell key={key}>
+              <UpdateField value={cell} setValue={value => setValue(key, value)}/>
+            </TableCell>
+          )
+        }
+      })}
       <TableCell style={{minWidth: '95px'}}>
         {_.isEqual(updatedRow, inputRow) ?
           <></>
@@ -131,7 +174,7 @@ const DataRow = ({ unchangableAttributes, row, entity, mutate, setMainError }) =
   )
 }
 
-const CreateEntity = ({ unchangableAttributes, headers, entity, mutate, setMainError }) => {
+const CreateEntity = ({ fetchedAttributes, unchangableAttributes, hidden, selectable, headers, entity, mutate, setMainError }) => {
   const temp = {}
 
   headers.forEach(header => {
@@ -168,23 +211,56 @@ const CreateEntity = ({ unchangableAttributes, headers, entity, mutate, setMainE
     setIsCreating(false)
   }
 
+  const handleSelect = (field, value) => {
+    const tempEntity = _.clone(newEntity)
+    tempEntity[field] = value ? value.id:""
+    setNewEntity(tempEntity)
+  }
+
   return (
     <>
-      {headers.map((header, index) =>
-        <TableCell key={index}>
-          {unchangableAttributes.includes(header) ?
-            <>{header}</>
-          :
-            <FloatingLabel
-              controlId="floatingInput"
-              label={header}
-            >
-              <Form.Control value={newEntity[header]} onChange={(e) => handleChange(e, header)} type="text" placeholder="" />
-            </FloatingLabel>
-          }
-        </TableCell>
-      )}
-      <TableCell style={{ textAlign: 'center', background: 'white', position: 'sticky', top: '0'}} colSpan={2}>
+      {headers.map((header, index) => {
+        if (unchangableAttributes.includes(header) && !hidden.includes(header)) {
+          return (
+            <TableCell key={index}>
+              {header}
+            </TableCell>
+          )
+        }
+        if (selectable[header] && !hidden.includes(header)) {
+          const formattedData = fetchedAttributes[header].data.rows.map(h => {
+            let label = h[selectable[header].columns[0]]
+
+            selectable[header].columns.slice(1).forEach(column => {
+              label += ` ${h[column]}`
+            })
+
+            return {
+              id: h.id,
+              label
+            }
+          })
+
+          return (
+            <TableCell key={header}>
+              <Select value={_.find(formattedData, ['id', newEntity[header]])} title={selectable[header].title} data={formattedData} handleSelect={(_, value) => handleSelect(header, value)} />
+            </TableCell>
+          )
+        }
+        if (!hidden.includes(header)) {
+          return (
+            <TableCell key={header}>
+              <FloatingLabel
+                controlId="floatingInput"
+                label={header}
+              >
+                <Form.Control value={newEntity[header]} onChange={(e) => handleChange(e, header)} type="text" placeholder="" />
+              </FloatingLabel>
+            </TableCell>
+          )
+        }
+      })}
+      <TableCell style={{ textAlign: 'center', background: 'white'}} colSpan={2}>
         {isCreating ?
           <Spinner size="sm" variant="primary" style={{ margin: 'auto' }} animation="grow" />
         :
@@ -203,14 +279,34 @@ const CreateEntity = ({ unchangableAttributes, headers, entity, mutate, setMainE
 
 }
 
-const EditDeleteViewTable = ({ rows, unchangableAttributes, entity, mutate }) => {
+const EditDeleteViewTable = ({ rows, hidden, selectable, unchangableAttributes, entity, mutate }) => {
   const [mainError, setMainError] = useState()
+  const headers = Object.keys(rows[0])
+
+  const fetchedAttributes = {}
+
+  Object.entries(selectable).forEach(([key, value]) => {
+    const fetchUrl = `/api/entities/${value['entity']}`
+    const { data, error } = useSWR(fetchUrl, fetcher, {revalidateOnFocus: false, revalidateOnReconnect: false})
+
+    fetchedAttributes[key] = {
+      data,
+      error
+    }
+  })
+
+  let lastError
+  if (!(_.every(fetchedAttributes, a => {
+    if (a.error) {
+      lastError = a.error
+    }
+    return !(a.error)
+  }))) return <div>failed to load: {lastError?.info?.err}</div>
+  if (!(_.every(fetchedAttributes, a => a.data))) return <Spinner style={{ margin: 'auto' }} animation="grow" />
+
   if (rows.length === 0) {
     return <div style={{margin: 'auto'}}>no data</div>
   }
-
-  const headers = Object.keys(rows[0])
-
 
   return (
     <>
@@ -222,13 +318,13 @@ const EditDeleteViewTable = ({ rows, unchangableAttributes, entity, mutate }) =>
       <TableContainer style={{background: 'white'}}>
         <MUITable>
           <TableHead>
-            <TableRow style={{ background: 'white', position: 'sticky', top: '0',  boxShadow: '0px 7px 3px -7px #000000, 5px 5px 15px 5px rgba(0,0,0,0)' }}>
-              <CreateEntity unchangableAttributes={unchangableAttributes} setMainError={setMainError} headers={headers} entity={entity} mutate={mutate}/>
+            <TableRow style={{ background: 'white', boxShadow: '0px 7px 3px -7px #000000, 5px 5px 15px 5px rgba(0,0,0,0)' }}>
+              <CreateEntity fetchedAttributes={fetchedAttributes} hidden={hidden} selectable={selectable} unchangableAttributes={unchangableAttributes} setMainError={setMainError} headers={headers} entity={entity} mutate={mutate}/>
             </TableRow>
           </TableHead>
           <TableBody>
             {rows.map((row, index) =>
-              <DataRow unchangableAttributes={unchangableAttributes} setMainError={setMainError} key={`${entity}-${index}`} row={row} entity={entity} mutate={mutate}/>
+              <DataRow fetchedAttributes={fetchedAttributes} hidden={hidden} selectable={selectable} unchangableAttributes={unchangableAttributes} setMainError={setMainError} key={`${entity}-${index}`} row={row} entity={entity} mutate={mutate}/>
             )}
           </TableBody>
         </MUITable>

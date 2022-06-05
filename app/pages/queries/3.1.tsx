@@ -19,7 +19,7 @@ import { fetcher } from 'lib/utils'
 
 const Researchers = ({ projectId, setShowWithId }) => {
   const fetchUrl = projectId ? `/api/queries/3.1?projectId=${projectId}`:''
-  const { data, error } = useSWR(fetchUrl, fetcher)
+  const { data, error } = useSWR(fetchUrl, fetcher, {revalidateOnFocus: false, revalidateOnReconnect: false})
 
   return (
     <Modal
@@ -66,7 +66,7 @@ const Content = ({ executive, duration, fromDate, toDate }) => {
 
   const fetchUrl = Urlparameters === "" ? baseUrl:`${baseUrl}?${Urlparameters}`
   
-  const { data, error } = useSWR(fetchUrl, fetcher)
+  const { data, error } = useSWR(fetchUrl, fetcher, {revalidateOnFocus: false, revalidateOnReconnect: false})
 
   if (error) return <div>failed to load: {error?.info?.err}</div>
   if (!data) return <Spinner style={{ margin: 'auto' }} animation="grow" />
@@ -90,7 +90,7 @@ const QueryPage: NextPage = () => {
   const [toDate, setToDate] = useState<Date | null>(null);
 
   const fetchUrl = `/api/entities/executive`
-  const { data, error } = useSWR(fetchUrl, fetcher)
+  const { data, error } = useSWR(fetchUrl, fetcher, {revalidateOnFocus: false, revalidateOnReconnect: false})
 
   if (error) return <div>failed to load: {error?.info?.err}</div>
   if (!data) return <Spinner style={{ margin: 'auto' }} animation="grow" />
@@ -117,8 +117,8 @@ const QueryPage: NextPage = () => {
       <div style={{margin: '10px 15px', display: 'flex'}}>
         <div style={{flexGrow: 1, flexBasis: 0}}>
           <h1>3.1</h1>
-          <span>Available programs and projects that satisfy given criteria</span>
-          <span>Choose project to see the researchers that work on it</span>
+          <span>Available programs and projects that satisfy given criteria.</span>
+          <span>{" "}Choose project to see the researchers that work on it</span>
         </div>
         <div style={{flexGrow: 2, flexBasis: 0, display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
           <div style={{marginTop: '10px'}}>

@@ -13,7 +13,7 @@ import { fetcher } from 'lib/utils'
 
 const View = ({ view, isActive }) => {
   const fetchUrl = view && isActive ? `/api/queries/3.2${view}`:null
-  const { data, error } = useSWR(fetchUrl, fetcher)
+  const { data, error } = useSWR(fetchUrl, fetcher, {revalidateOnFocus: false, revalidateOnReconnect: false})
 
   if (!view) return <Spinner style={{ margin: 'auto' }} animation="grow" />
 
