@@ -1,0 +1,22 @@
+version: "3.9"
+services:
+  db:
+    build: db/
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+
+  app:
+    build: app/
+    environment:
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
+      DB_HOST: db
+      APP_PORT: ${APP_CONTAINER_PORT}
+    ports:
+    - "${HOST_PORT}:${APP_CONTAINER_PORT}"
+    depends_on:
+      - db
