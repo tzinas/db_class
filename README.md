@@ -1,1 +1,3 @@
-This is the changed README file
+This is a database project for NTUA ECE.
+
+PostgresSQL, Next.js, React, Docker
