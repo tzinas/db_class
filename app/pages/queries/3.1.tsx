@@ -6,35 +6,80 @@ import dateFormat from "dateformat"
 import Spinner from 'react-bootstrap/Spinner'
 import Form from 'react-bootstrap/Form'
 import FloatingLabel from 'react-bootstrap/FloatingLabel'
+import Modal from 'react-bootstrap/Modal'
 
 import Navigation from 'components/Navigation'
 import DateRangePicker from 'components/DateRange'
 import Table from 'components/Table'
 import Select from 'components/Select'
 
+import styles from 'styles/modal.module.scss'
+
 import { fetcher } from 'lib/utils'
 
+const Researchers = ({ projectId, setShowWithId }) => {
+  const fetchUrl = projectId ? `/api/queries/3.1?projectId=${projectId}`:''
+  const { data, error } = useSWR(fetchUrl, fetcher)
+
+  return (
+    <Modal
+        show={projectId ? true:false}
+        onHide={() => setShowWithId(null)}
+        dialogClassName={styles.dialog}
+        contentClassName={styles.content}
+        aria-labelledby="example-custom-modal-styling-title"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="example-custom-modal-styling-title">
+            Researchers
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {error &&
+            <div>failed to load: {error?.info?.err}</div>
+          }
+          {!data &&
+            <Spinner style={{ margin: 'auto' }} animation="grow" />
+          }
+          <Table rows={data.rows}/>
+        </Modal.Body>
+      </Modal>
+  )
+}
+
 const Content = ({ executive, duration, fromDate, toDate }) => {
+  const [showWithId, setShowWithId] = useState()
+
   const baseUrl = `/api/queries/3.1`
   let Urlparameters = ''
 
+  let firstAtr = true
   Object.entries({executive, duration, fromDate: fromDate ? dateFormat(fromDate, "yyyy-mm-dd"):null, toDate: toDate ? dateFormat(toDate, "yyyy-mm-dd"):null}).forEach(([key,value]) => {
-    Urlparameters += value ? `${key}=${value}`:""
+    if (!value) {
+      return
+    }
+
+    Urlparameters += `${!firstAtr ? '&':''}${key}=${value}`
+    firstAtr = false
   })
 
   const fetchUrl = Urlparameters === "" ? baseUrl:`${baseUrl}?${Urlparameters}`
-  console.log(fetchUrl)
   
-  /*
   const { data, error } = useSWR(fetchUrl, fetcher)
-
-  if (!scientificField) return <Spinner style={{ margin: 'auto' }} animation="grow" />
 
   if (error) return <div>failed to load: {error?.info?.err}</div>
   if (!data) return <Spinner style={{ margin: 'auto' }} animation="grow" />
-  */
-  return <></>
-  return <Table rows={data.rows}/>
+
+  const handleSelect = (id) => {
+    setShowWithId(id)
+  }
+
+  return (
+    <>
+      <Table rows={data.rows} hidden={['id']} handleClick={handleSelect}/>
+      <Researchers projectId={showWithId} setShowWithId={setShowWithId}/>
+    </>
+  )
 }
 
 const QueryPage: NextPage = () => {
@@ -53,12 +98,18 @@ const QueryPage: NextPage = () => {
     setExecutive(value?.id)
   }
 
+  const handleChangeDuration = (event) => {
+    const num = Number(event.target.value)
+    if (Number.isInteger(num) && num >= 0) {
+      setDuration(event.target.value)
+    }
+  }
+
   const formattedExecutives = data.rows.map(ex => ({
     id: ex.id,
     label: `${ex.first_name} ${ex.last_name}`
   }))
 
-  console.log(fromDate, toDate)
   return (
     <>
       <Navigation />
@@ -69,17 +120,17 @@ const QueryPage: NextPage = () => {
           <span>Choose project to see the researchers that work on it</span>
         </div>
         <div style={{flexGrow: 2, flexBasis: 0, display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-          <div>
+          <div style={{marginTop: '10px'}}>
             <DateRangePicker fromDate={fromDate} setFromDate={setFromDate} toDate={toDate} setToDate={setToDate} />
           </div>
-          <div style={{display: 'flex', marginTop: '30px'}}>
+          <div style={{display: 'flex', marginTop: '15px'}}>
             <FloatingLabel
               controlId="floatingInput"
               label="Duration (years)"
             >
-              <Form.Control value={duration ? duration:""} onChange={(e) => setDuration(e.target.value)} type="number" placeholder=""/>
+              <Form.Control value={duration ? duration:""} onChange={handleChangeDuration} type="number" placeholder=""/>
             </FloatingLabel>
-            <div style={{marginLeft: '30px', flexGrow: 1}}>
+            <div style={{marginLeft: '15px', flexGrow: 1}}>
               <Select title='Executives' data={formattedExecutives} handleSelect={handleSelect} />
             </div>
           </div>

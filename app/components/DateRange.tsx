@@ -5,6 +5,15 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 const DateRangePicker = ({ fromDate, setFromDate, toDate, setToDate }) => {
+  const handleChange = (identifier, newValue) => {
+    if (identifier == 'to' && (!fromDate || fromDate <= newValue)) {
+      setToDate(newValue)
+    }
+    if (identifier == 'from' && (!toDate || newValue <= toDate)) {
+      setFromDate(newValue)
+    }
+  }
+
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <div style={{display: 'flex', alignItems: 'center'}}>
@@ -13,7 +22,7 @@ const DateRangePicker = ({ fromDate, setFromDate, toDate, setToDate }) => {
             label="From"
             value={fromDate}
             onChange={(newValue) => {
-              setFromDate(newValue)
+              handleChange('from', newValue)
             }}
             renderInput={(params) => <TextField {...params} />}
           />
@@ -24,7 +33,7 @@ const DateRangePicker = ({ fromDate, setFromDate, toDate, setToDate }) => {
             label="To"
             value={toDate}
             onChange={(newValue) => {
-              setToDate(newValue)
+              handleChange('to', newValue)
             }}
             renderInput={(params) => <TextField {...params} />}
           />
