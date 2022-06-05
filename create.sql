@@ -236,6 +236,20 @@ CREATE TRIGGER Evaluator_in_org BEFORE INSERT OR UPDATE ON Project
 FOR EACH ROW
 EXECUTE FUNCTION check_evaluator();
 
+CREATE FUNCTION update_org_id() RETURNS TRIGGER AS $Res_org_id_update$
+BEGIN
+  IF (NEW.organization_id <> OLD.organization_id) THEN 
+    RAISE EXCEPTION 'Cannot delete';
+  END IF;
+  RETURN NEW;
+END;
+$Res_org_id_update$ LANGUAGE plpgsql;
+
+CREATE TRIGGER Res_org_id_update BEFORE UPDATE ON University
+FOR EACH ROW 
+EXECUTE FUNCTION update_org_id();
+
+
 /* views from 3.2 */
 CREATE VIEW researchers_projects AS
 	SELECT R.last_name, R.first_name, P.project_title
