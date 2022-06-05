@@ -16,7 +16,7 @@ CREATE TYPE ORG AS ENUM ('University', 'Company', 'Research center');
 
 CREATE TABLE Organization (
   id SERIAL PRIMARY KEY,
-  name TEXT NOT NULL,
+  name TEXT NOT NULL UNIQUE,
   abbreviation VARCHAR(8),
   postal_code NUMERIC(5,0) CHECK (postal_code>0),
   city TEXT,
@@ -248,18 +248,6 @@ $Res_org_id_update$ LANGUAGE plpgsql;
 CREATE TRIGGER Res_org_id_update BEFORE UPDATE ON Researcher
 FOR EACH ROW 
 EXECUTE FUNCTION update_org_id();
-
-CREATE FUNCTION update_org_id() RETURNS TRIGGER AS $Res_org_id_update$
-BEGIN
-  IF (NEW.organization_id <> OLD.organization_id) THEN 
-    RAISE EXCEPTION 'Cannot update';
-  END IF;
-  RETURN NEW;
-END;
-$Res_org_id_update$ LANGUAGE plpgsql;
-
-CREATE TRIGGER Res_org_id_update BEFORE UPDATE ON Researcher
-FOR EACH ROW 
 
 CREATE FUNCTION no_update_org_type() RETURNS TRIGGER AS $No_org_type_update$
 BEGIN
