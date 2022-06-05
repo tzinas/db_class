@@ -99,7 +99,8 @@ CREATE TABLE Project(
   evaluation_date DATE, 
   CHECK (ending_date > starting_date),
   CHECK (duration BETWEEN 1 AND 4),
-  CHECK (evaluation_date < starting_date)
+  CHECK (evaluation_date < starting_date),
+  CHECK (funding_amount BETWEEN 100000 AND 1000000)
 );
 
 CREATE TABLE Deliverable(
