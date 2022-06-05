@@ -1,6 +1,14 @@
+import Head from "next/head"
 import 'styles/styles.scss'
 
-// This default export is required in a new `pages/_app.js` file.
 export default function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+  return (
+    <>
+      <Head>
+        <title>DB-CLASS NTUA ECE 2022</title>
+        <meta name="description" content="Application for db-class 2022" />
+      </Head>
+      <Component {...pageProps} />
+    </>
+  )
 }
