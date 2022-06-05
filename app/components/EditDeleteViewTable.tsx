@@ -18,8 +18,6 @@ import Select from 'components/Select'
 
 import { fetcher } from 'lib/utils'
 
-import styles from 'styles/select.module.scss'
-
 const UpdateField = ({ value, setValue }) => {
   const handleChange = (event) => {
     setValue(event.target.value)
